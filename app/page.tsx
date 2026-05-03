@@ -1,5 +1,4 @@
 import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
 import Transformation from "@/components/Transformation";
 import Pillars from "@/components/Pillars";
 import ContactCta from "@/components/ContactCta";
@@ -11,7 +10,6 @@ export default function Home() {
     <SmoothScroll>
       <Nav />
       <main>
-        <Hero />
         <Transformation />
         <Pillars />
         <ContactCta />

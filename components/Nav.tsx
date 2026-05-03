@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import Wordmark from "./ui/Wordmark";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.rentroyz.com";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://dev.rentroyz.com";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -39,13 +39,13 @@ export default function Nav() {
 
         <div className="hidden items-center gap-3 md:flex">
           <a
-            href={`${APP_URL}/login`}
+            href={`${APP_URL}/auth/register`}
             className="text-sm text-sand/80 transition hover:text-sand"
           >
             Sign in
           </a>
           <a
-            href={`${APP_URL}/register`}
+            href={`${APP_URL}/auth/register`}
             className="rounded-full bg-sand px-5 py-2 text-sm font-medium text-ink-deep transition-transform duration-300 ease-calm hover:scale-[1.02]"
           >
             Register
@@ -83,10 +83,10 @@ export default function Nav() {
             <a onClick={() => setOpen(false)} href="#contact">Contact</a>
           </nav>
           <div className="mt-auto flex flex-col gap-3">
-            <a href={`${APP_URL}/login`} className="rounded-full border border-sand/30 px-6 py-3 text-center text-sand">
+            <a href={`${APP_URL}/auth/register`} className="rounded-full border border-sand/30 px-6 py-3 text-center text-sand">
               Sign in
             </a>
-            <a href={`${APP_URL}/register`} className="rounded-full bg-sand px-6 py-3 text-center font-medium text-ink-deep">
+            <a href={`${APP_URL}/auth/register`} className="rounded-full bg-sand px-6 py-3 text-center font-medium text-ink-deep">
               Register
             </a>
           </div>
