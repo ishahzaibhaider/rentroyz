@@ -11,6 +11,12 @@ import {
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://dev.rentroyz.com";
 
+// Multiplier on scroll-to-video mapping. >1 means the video advances faster
+// than the scroll — small scroll moves cover more video. The video finishes
+// at scroll progress 1/VIDEO_SPEED and then holds the last frame for the
+// remaining text phases.
+const VIDEO_SPEED = 1.4;
+
 const STAGES = [
   {
     range: [0.26, 0.30, 0.45, 0.49] as const,
@@ -55,7 +61,7 @@ export default function Transformation() {
     if (!v || !hasVideo) return;
     const dur = v.duration;
     if (!Number.isFinite(dur) || dur <= 0) return;
-    targetTime.current = Math.max(0, Math.min(dur - 0.001, p * dur));
+    targetTime.current = Math.max(0, Math.min(dur - 0.001, p * VIDEO_SPEED * dur));
     if (rafScheduled.current) return;
     rafScheduled.current = true;
     requestAnimationFrame(() => {
