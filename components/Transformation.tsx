@@ -162,9 +162,9 @@ export default function Transformation() {
         />
 
         {/* Dark overlay so light text always reads, even on bright video frames */}
-        <div className="pointer-events-none absolute inset-0 bg-ink/45" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/10 to-ink/80" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/55 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-ink/60" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/30 to-ink/90" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/35 to-transparent" />
 
         <HeroPhase progress={scrollYProgress} />
 
@@ -188,16 +188,16 @@ function HeroPhase({ progress }: { progress: MotionValue<number> }) {
       style={{ opacity, y }}
       className="absolute inset-0 z-10 flex items-center px-6 lg:px-16"
     >
-      <div className="max-w-2xl">
-        <p className="font-sans text-xs uppercase tracking-[0.3em] text-sand/70">
+      <div className="max-w-2xl [text-shadow:_0_2px_18px_rgb(0_0_0_/_0.55)]">
+        <p className="font-sans text-xs uppercase tracking-[0.3em] text-sand/85">
           Property management — Saudi Arabia
         </p>
         <h1 className="mt-6 font-display text-5xl leading-[1.02] tracking-tight text-sand sm:text-6xl lg:text-8xl">
           We Manage.
           <br />
-          <span className="text-sand/70">You Earn.</span>
+          <span className="text-sand/80">You Earn.</span>
         </h1>
-        <p className="mt-8 max-w-xl text-lg leading-relaxed text-sand/85 lg:text-xl">
+        <p className="mt-8 max-w-xl text-lg leading-relaxed text-sand/95 lg:text-xl">
           Manage properties. Minus the headaches. We furnish your apartment,
           list it on Airbnb and Booking.com, and handle every guest — so you
           earn without lifting a finger.
@@ -268,14 +268,14 @@ function Stage({
       style={{ opacity, y }}
       className="absolute inset-0 z-10 flex items-end px-6 pb-24 sm:items-center sm:pb-0 lg:px-16"
     >
-      <div className="max-w-xl">
+      <div className="max-w-xl [text-shadow:_0_2px_18px_rgb(0_0_0_/_0.55)]">
         <p className="font-sans text-xs uppercase tracking-[0.3em] text-ember">
           {stage.eyebrow}
         </p>
         <h3 className="mt-4 font-display text-4xl leading-tight text-sand sm:text-6xl">
           {stage.title}
         </h3>
-        <p className="mt-5 max-w-md text-base leading-relaxed text-sand/85 sm:text-lg">
+        <p className="mt-5 max-w-md text-base leading-relaxed text-sand/95 sm:text-lg">
           {stage.body}
         </p>
       </div>
@@ -292,7 +292,7 @@ function ClosingSlogan({ progress }: { progress: MotionValue<number> }) {
       style={{ opacity, scale }}
       className="absolute inset-0 z-20 flex items-center justify-center px-6"
     >
-      <h2 className="text-center font-display text-5xl leading-[0.95] tracking-tight text-sand sm:text-7xl lg:text-9xl">
+      <h2 className="text-center font-display text-5xl leading-[0.95] tracking-tight text-sand [text-shadow:_0_4px_28px_rgb(0_0_0_/_0.6)] sm:text-7xl lg:text-9xl">
         We Manage.
         <br />
         <span className="text-ember">You Earn.</span>
