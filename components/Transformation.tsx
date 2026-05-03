@@ -45,6 +45,7 @@ export default function Transformation() {
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasVideo, setHasVideo] = useState(true);
+  const [videoReady, setVideoReady] = useState(false);
   const targetTime = useRef(0);
   const rafScheduled = useRef(false);
 
@@ -53,12 +54,11 @@ export default function Transformation() {
     offset: ["start start", "end end"],
   });
 
-  // rAF-batched seek: at most one currentTime write per frame, regardless of
-  // how many scroll events fire in between. Eliminates the lag/jank from
-  // assigning currentTime on every motion event.
+  // Seek is gated on videoReady so it only fires once the full blob is in
+  // memory — preventing the cancelled-byte-range death spiral on CDNs.
   useMotionValueEvent(scrollYProgress, "change", (p) => {
     const v = videoRef.current;
-    if (!v || !hasVideo) return;
+    if (!v || !hasVideo || !videoReady) return;
     const dur = v.duration;
     if (!Number.isFinite(dur) || dur <= 0) return;
     targetTime.current = Math.max(0, Math.min(dur - 0.001, p * VIDEO_SPEED * dur));
@@ -74,13 +74,56 @@ export default function Transformation() {
     });
   });
 
+  // Fully fetch the video as a blob before enabling scrubbing. With a network
+  // src, seeks past the initial HTTP buffer issue new byte-range requests that
+  // get cancelled by subsequent seeks, freezing the video. A blob URL is
+  // backed by an in-memory buffer, so seeks are instant — same as local disk.
   useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    const onError = () => setHasVideo(false);
-    v.addEventListener("error", onError);
-    return () => v.removeEventListener("error", onError);
-  }, []);
+    let cancelled = false;
+    let blobUrl: string | undefined;
+
+    (async () => {
+      try {
+        const res = await fetch("/video/transform.mp4");
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        const blob = await res.blob();
+        if (cancelled) return;
+        blobUrl = URL.createObjectURL(blob);
+        const v = videoRef.current;
+        if (!v) return;
+        v.src = blobUrl;
+        await new Promise<void>((resolve, reject) => {
+          const ok = () => {
+            v.removeEventListener("loadedmetadata", ok);
+            v.removeEventListener("error", err);
+            resolve();
+          };
+          const err = () => {
+            v.removeEventListener("loadedmetadata", ok);
+            v.removeEventListener("error", err);
+            reject(new Error("metadata failed"));
+          };
+          v.addEventListener("loadedmetadata", ok);
+          v.addEventListener("error", err);
+        });
+        if (cancelled) return;
+        // Sync video to whatever scroll position the user already landed on.
+        const dur = v.duration;
+        if (Number.isFinite(dur) && dur > 0) {
+          const p = scrollYProgress.get();
+          v.currentTime = Math.max(0, Math.min(dur - 0.001, p * VIDEO_SPEED * dur));
+        }
+        setVideoReady(true);
+      } catch {
+        if (!cancelled) setHasVideo(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      if (blobUrl) URL.revokeObjectURL(blobUrl);
+    };
+  }, [scrollYProgress]);
 
   const fallbackBg = useTransform(
     scrollYProgress,
@@ -104,8 +147,8 @@ export default function Transformation() {
         {hasVideo && (
           <video
             ref={videoRef}
-            className="absolute inset-0 h-full w-full object-cover"
-            src="/video/transform.mp4"
+            className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
+            style={{ opacity: videoReady ? 1 : 0 }}
             muted
             playsInline
             preload="auto"
