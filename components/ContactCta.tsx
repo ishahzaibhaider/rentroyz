@@ -1,140 +1,99 @@
 "use client";
 
-import { useState } from "react";
-import RevealUp from "./ui/RevealUp";
-import PetalPattern from "./ui/PetalPattern";
-
-type Status = "idle" | "submitting" | "ok" | "error";
+import { motion } from "framer-motion";
+import { calm } from "@/lib/motion";
 
 export default function ContactCta() {
-  const [status, setStatus] = useState<Status>("idle");
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("submitting");
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      setStatus(res.ok ? "ok" : "error");
-      if (res.ok) (e.target as HTMLFormElement).reset();
-    } catch {
-      setStatus("error");
-    }
-  }
-
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-sand px-6 py-28 text-ink-deep sm:py-36 lg:px-10"
+      className="relative overflow-hidden bg-sand-soft px-6 py-24 text-ink-deep sm:py-28 lg:px-10 lg:py-36"
     >
-      <PetalPattern className="text-ink-deep" opacity={0.05} />
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.8, ease: calm }}
+        className="mx-auto flex max-w-3xl flex-col items-center text-center"
+      >
+        <h2 className="font-display text-4xl font-black leading-[1.1] tracking-tight text-ink-deep sm:text-5xl lg:text-6xl">
+          Let&apos;s Talk
+        </h2>
 
-      <div className="relative mx-auto grid max-w-7xl gap-16 lg:grid-cols-2 lg:gap-24">
-        <RevealUp>
-          <p className="font-sans text-xs uppercase tracking-[0.3em] text-burgundy">
-            Get in touch
-          </p>
-          <h2 className="mt-4 font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-            Manage properties.
-            <br />
-            <span className="text-ink-muted">Minus the headaches.</span>
-          </h2>
-          <p className="mt-8 max-w-md text-lg leading-relaxed text-ink-deep/75">
-            Tell us about your property. We&apos;ll come back with a free
-            revenue estimate and a clear plan within 48 hours.
-          </p>
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-deep/60 sm:text-xl">
+          Schedule a consultation to discuss your property
+        </p>
 
-          <dl className="mt-12 space-y-5 text-sm">
-            <div>
-              <dt className="text-ink-deep/60">Email</dt>
-              <dd className="mt-1 font-display text-lg">hello@rentroyz.com</dd>
-            </div>
-            <div>
-              <dt className="text-ink-deep/60">WhatsApp</dt>
-              <dd className="mt-1 font-display text-lg">+966 ·· ··· ····</dd>
-            </div>
-            <div>
-              <dt className="text-ink-deep/60">Riyadh, Saudi Arabia</dt>
-            </div>
-          </dl>
-        </RevealUp>
+        <div className="mt-10 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:gap-5">
+          <a
+            href="mailto:hello@rentroyz.com?subject=Schedule%20a%20consultation"
+            className="group inline-flex items-center justify-center gap-3 rounded-full bg-ink-deep px-8 py-4 text-base font-bold text-sand shadow-[0_6px_18px_rgba(0,0,0,0.12)] transition-all duration-500 ease-calm hover:bg-ember hover:shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
+          >
+            <CalendarIcon className="h-5 w-5" />
+            Schedule Meeting
+          </a>
+          <a
+            href="mailto:hello@rentroyz.com"
+            className="group inline-flex items-center justify-center gap-3 rounded-full border-[1.5px] border-ink-deep/20 bg-white px-8 py-4 text-base font-semibold text-ink-deep transition-all duration-500 ease-calm hover:border-ink-deep/50 hover:bg-white/80"
+          >
+            <ChatIcon className="h-5 w-5" />
+            Contact Us
+          </a>
+        </div>
 
-        <RevealUp>
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <Field name="name" label="Your name" required />
-              <Field name="email" label="Email" type="email" required />
-            </div>
-            <Field name="phone" label="Phone (optional)" type="tel" />
-            <Field name="message" label="Tell us about your property" multiline />
-            <button
-              type="submit"
-              disabled={status === "submitting"}
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink-deep px-7 py-4 text-sm font-medium text-sand transition-colors duration-500 ease-calm hover:bg-ember disabled:opacity-60 sm:w-auto"
-            >
-              {status === "submitting" ? "Sending..." : "Request an estimate"}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform duration-500 ease-calm group-hover:translate-x-1">
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            {status === "ok" && (
-              <p className="text-sm text-ink-deep/80">
-                Thank you. We&apos;ll be in touch within 48 hours.
-              </p>
-            )}
-            {status === "error" && (
-              <p className="text-sm text-burgundy">
-                Something went wrong. Please email hello@rentroyz.com directly.
-              </p>
-            )}
-          </form>
-        </RevealUp>
-      </div>
+        <div className="mt-10 flex flex-col items-center gap-2 text-base text-ink-deep/60 sm:flex-row sm:gap-6">
+          <a
+            href="mailto:hello@rentroyz.com"
+            className="transition-colors hover:text-ink-deep"
+          >
+            hello@rentroyz.com
+          </a>
+          <span className="hidden sm:inline" aria-hidden>
+            •
+          </span>
+          <a
+            href="tel:+12345678900"
+            className="transition-colors hover:text-ink-deep"
+          >
+            +1 (234) 567-890
+          </a>
+        </div>
+      </motion.div>
     </section>
   );
 }
 
-function Field({
-  name,
-  label,
-  type = "text",
-  required,
-  multiline,
-}: {
-  name: string;
-  label: string;
-  type?: string;
-  required?: boolean;
-  multiline?: boolean;
-}) {
-  const base =
-    "peer w-full rounded-2xl border border-ink-deep/20 bg-transparent px-4 pb-2 pt-6 text-ink-deep outline-none transition-colors duration-300 ease-calm placeholder:text-transparent focus:border-ink-deep";
+function CalendarIcon({ className }: { className?: string }) {
   return (
-    <label className="relative block">
-      {multiline ? (
-        <textarea
-          name={name}
-          required={required}
-          rows={4}
-          placeholder={label}
-          className={`${base} resize-none`}
-        />
-      ) : (
-        <input
-          type={type}
-          name={name}
-          required={required}
-          placeholder={label}
-          className={base}
-        />
-      )}
-      <span className="pointer-events-none absolute left-4 top-2 text-xs text-ink-deep/60 transition-all duration-300 ease-calm peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs">
-        {label}
-      </span>
-    </label>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
+    >
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <path d="M16 2v4M8 2v4M3 10h18" />
+    </svg>
+  );
+}
+
+function ChatIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
+    >
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
   );
 }
