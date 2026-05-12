@@ -8,6 +8,7 @@ import {
   useMotionValueEvent,
   type MotionValue,
 } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://dev.rentroyz.com";
 
@@ -17,31 +18,18 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://dev.rentroyz.com";
 // remaining text phases.
 const VIDEO_SPEED = 1.4;
 
-const STAGES = [
-  {
-    range: [0.26, 0.30, 0.45, 0.49] as const,
-    eyebrow: "01 — Onboard",
-    title: "We furnish it.",
-    body:
-      "From a bare apartment to a fully styled, hospitality-grade space. Our team handles design, sourcing, and installation.",
-  },
-  {
-    range: [0.51, 0.55, 0.70, 0.74] as const,
-    eyebrow: "02 — List",
-    title: "We list it.",
-    body:
-      "We publish your property on Airbnb, Booking.com, and our own platform — with professional photography and copy that converts.",
-  },
-  {
-    range: [0.76, 0.80, 0.92, 0.96] as const,
-    eyebrow: "03 — Manage",
-    title: "We manage it.",
-    body:
-      "Guest communication, check-in, cleaning, maintenance, and revenue optimisation. You see the earnings, not the work.",
-  },
+const STAGE_RANGES: readonly (readonly [number, number, number, number])[] = [
+  [0.26, 0.30, 0.45, 0.49],
+  [0.51, 0.55, 0.70, 0.74],
+  [0.76, 0.80, 0.92, 0.96],
 ];
 
+type StageText = { eyebrow: string; title: string; body: string };
+
 export default function Transformation() {
+  const t = useTranslations("transformation");
+  const stages = t.raw("stages") as StageText[];
+
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasVideo, setHasVideo] = useState(true);
@@ -168,8 +156,13 @@ export default function Transformation() {
 
         <HeroPhase progress={scrollYProgress} />
 
-        {STAGES.map((stage, i) => (
-          <Stage key={i} progress={scrollYProgress} stage={stage} />
+        {stages.map((stage, i) => (
+          <Stage
+            key={i}
+            progress={scrollYProgress}
+            range={STAGE_RANGES[i]}
+            text={stage}
+          />
         ))}
 
         <ClosingSlogan progress={scrollYProgress} />
@@ -179,6 +172,7 @@ export default function Transformation() {
 }
 
 function HeroPhase({ progress }: { progress: MotionValue<number> }) {
+  const t = useTranslations("transformation");
   const opacity = useTransform(progress, [0, 0.02, 0.18, 0.24], [1, 1, 1, 0]);
   const y = useTransform(progress, [0, 0.24], [0, -24]);
   const cueOpacity = useTransform(progress, [0, 0.06, 0.18], [1, 1, 0]);
@@ -190,30 +184,28 @@ function HeroPhase({ progress }: { progress: MotionValue<number> }) {
     >
       <div className="max-w-2xl [text-shadow:_0_2px_18px_rgb(0_0_0_/_0.55)]">
         <p className="font-sans text-xs uppercase tracking-[0.3em] text-sand/85">
-          Property management — Saudi Arabia
+          {t("eyebrow")}
         </p>
         <h1 className="mt-6 font-display text-5xl leading-[1.02] tracking-tight text-sand sm:text-6xl lg:text-8xl">
-          We Manage.
+          {t("heroTitle")}
           <br />
-          <span className="text-sand/80">You Earn.</span>
+          <span className="text-sand/80">{t("heroSubtitle")}</span>
         </h1>
         <p className="mt-8 max-w-xl text-lg leading-relaxed text-sand/95 lg:text-xl">
-          Manage properties. Minus the headaches. We furnish your apartment,
-          list it on Airbnb and Booking.com, and handle every guest — so you
-          earn without lifting a finger.
+          {t("heroBody")}
         </p>
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           <a
             href="#contact"
             className="group inline-flex items-center justify-center gap-2 rounded-full bg-sand px-7 py-4 text-sm font-medium text-ink-deep transition-all duration-500 ease-calm hover:bg-ember hover:text-sand"
           >
-            Get a Revenue Estimate
+            {t("cta1")}
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="none"
-              className="transition-transform duration-500 ease-calm group-hover:translate-x-1"
+              className="transition-transform duration-500 ease-calm group-hover:translate-x-1 rtl:-scale-x-100"
             >
               <path
                 d="M5 12h14M13 6l6 6-6 6"
@@ -228,7 +220,7 @@ function HeroPhase({ progress }: { progress: MotionValue<number> }) {
             href={`${APP_URL}/auth/register`}
             className="inline-flex items-center justify-center rounded-full border border-sand/30 px-7 py-4 text-sm text-sand transition hover:border-sand"
           >
-            List Your Property
+            {t("cta2")}
           </a>
         </div>
       </div>
@@ -237,8 +229,8 @@ function HeroPhase({ progress }: { progress: MotionValue<number> }) {
         style={{ opacity: cueOpacity }}
         className="absolute bottom-10 left-6 right-6 flex items-center justify-between text-xs text-sand/60 lg:left-16 lg:right-16"
       >
-        <span className="hidden sm:inline">Scroll to see the transformation</span>
-        <span className="sm:hidden">Scroll</span>
+        <span className="hidden sm:inline">{t("scrollLong")}</span>
+        <span className="sm:hidden">{t("scrollShort")}</span>
         <svg width="14" height="22" viewBox="0 0 14 22" className="animate-bounce" fill="none">
           <rect x="1" y="1" width="12" height="20" rx="6" stroke="currentColor" strokeOpacity="0.5" />
           <circle cx="7" cy="7" r="1.5" fill="currentColor" />
@@ -250,12 +242,14 @@ function HeroPhase({ progress }: { progress: MotionValue<number> }) {
 
 function Stage({
   progress,
-  stage,
+  range,
+  text,
 }: {
   progress: MotionValue<number>;
-  stage: (typeof STAGES)[number];
+  range: readonly [number, number, number, number];
+  text: StageText;
 }) {
-  const [start, fadeIn, fadeOut, end] = stage.range;
+  const [start, fadeIn, fadeOut, end] = range;
   const opacity = useTransform(
     progress,
     [start, fadeIn, fadeOut, end],
@@ -270,13 +264,13 @@ function Stage({
     >
       <div className="max-w-xl [text-shadow:_0_2px_18px_rgb(0_0_0_/_0.55)]">
         <p className="font-sans text-xs uppercase tracking-[0.3em] text-ember">
-          {stage.eyebrow}
+          {text.eyebrow}
         </p>
         <h3 className="mt-4 font-display text-4xl leading-tight text-sand sm:text-6xl">
-          {stage.title}
+          {text.title}
         </h3>
         <p className="mt-5 max-w-md text-base leading-relaxed text-sand/95 sm:text-lg">
-          {stage.body}
+          {text.body}
         </p>
       </div>
     </motion.div>
@@ -284,6 +278,7 @@ function Stage({
 }
 
 function ClosingSlogan({ progress }: { progress: MotionValue<number> }) {
+  const t = useTranslations("transformation");
   const opacity = useTransform(progress, [0.95, 0.99], [0, 1]);
   const scale = useTransform(progress, [0.95, 0.99], [0.96, 1]);
 
@@ -293,9 +288,9 @@ function ClosingSlogan({ progress }: { progress: MotionValue<number> }) {
       className="absolute inset-0 z-20 flex items-center justify-center px-6"
     >
       <h2 className="text-center font-display text-5xl leading-[0.95] tracking-tight text-sand [text-shadow:_0_4px_28px_rgb(0_0_0_/_0.6)] sm:text-7xl lg:text-9xl">
-        We Manage.
+        {t("closingTitle")}
         <br />
-        <span className="text-ember">You Earn.</span>
+        <span className="text-ember">{t("closingSubtitle")}</span>
       </h2>
     </motion.div>
   );

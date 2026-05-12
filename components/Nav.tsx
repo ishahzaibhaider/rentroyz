@@ -2,13 +2,16 @@
 
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 import Wordmark from "./ui/Wordmark";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://dev.rentroyz.com";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const t = useTranslations("nav");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -32,23 +35,25 @@ export default function Nav() {
         </a>
 
         <nav className="hidden items-center gap-10 text-sm tracking-wide text-sand/80 md:flex">
-          <a className="transition hover:text-sand" href="#transformation">Services</a>
-          <a className="transition hover:text-sand" href="#pillars">About</a>
-          <a className="transition hover:text-sand" href="#contact">Contact</a>
+          <a className="transition hover:text-sand" href="#transformation">{t("services")}</a>
+          <a className="transition hover:text-sand" href="#pillars">{t("about")}</a>
+          <a className="transition hover:text-sand" href="#contact">{t("contact")}</a>
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-4 md:flex">
+          <LanguageSwitcher />
+          <span className="h-4 w-px bg-sand/20" aria-hidden />
           <a
             href={`${APP_URL}/auth/register`}
             className="text-sm text-sand/80 transition hover:text-sand"
           >
-            Sign in
+            {t("signIn")}
           </a>
           <a
             href={`${APP_URL}/auth/register`}
             className="rounded-full bg-sand px-5 py-2 text-sm font-medium text-ink-deep transition-transform duration-300 ease-calm hover:scale-[1.02]"
           >
-            Register
+            {t("register")}
           </a>
         </div>
 
@@ -78,16 +83,19 @@ export default function Nav() {
             </button>
           </div>
           <nav className="mt-16 flex flex-col gap-8 text-3xl font-display text-sand">
-            <a onClick={() => setOpen(false)} href="#transformation">Services</a>
-            <a onClick={() => setOpen(false)} href="#pillars">About</a>
-            <a onClick={() => setOpen(false)} href="#contact">Contact</a>
+            <a onClick={() => setOpen(false)} href="#transformation">{t("services")}</a>
+            <a onClick={() => setOpen(false)} href="#pillars">{t("about")}</a>
+            <a onClick={() => setOpen(false)} href="#contact">{t("contact")}</a>
           </nav>
           <div className="mt-auto flex flex-col gap-3">
+            <div className="flex justify-center pb-2">
+              <LanguageSwitcher />
+            </div>
             <a href={`${APP_URL}/auth/register`} className="rounded-full border border-sand/30 px-6 py-3 text-center text-sand">
-              Sign in
+              {t("signIn")}
             </a>
             <a href={`${APP_URL}/auth/register`} className="rounded-full bg-sand px-6 py-3 text-center font-medium text-ink-deep">
-              Register
+              {t("register")}
             </a>
           </div>
         </div>

@@ -1,21 +1,24 @@
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Nav from "@/components/Nav";
 import Transformation from "@/components/Transformation";
 import BlogSection from "@/components/BlogSection";
 import PropertyToProfit from "@/components/PropertyToProfit";
 import Operations from "@/components/Operations";
 import Pillars from "@/components/Pillars";
-import Testimonials from "@/components/Testimonials";
 import ContactCta from "@/components/ContactCta";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
 
-const BLOG_BODY = [
-  "RentRoyz is a professional property operations company focused on short-term and mid-term rentals. We take full responsibility for performance, guest experience, and asset care.",
-  "Our model is simple: you own the property, we run the operation, and profits are shared transparently.",
-  "We rely on smart systems, structured processes, and hands-on execution to deliver consistent results.",
-];
+export default async function Home({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  setRequestLocale(locale);
+  const t = await getTranslations("blog");
+  const operateBody = t.raw("operate.body") as string[];
+  const ownerAppBody = t.raw("ownerApp.body") as string[];
 
-export default function Home() {
   return (
     <SmoothScroll>
       <Nav />
@@ -24,33 +27,34 @@ export default function Home() {
 
         <BlogSection
           id="about"
-          titleLineOne="Built to Operate,"
-          titleLineTwo="Not Just Manage"
-          body={BLOG_BODY}
+          titleLineOne={t("operate.titleLineOne")}
+          titleLineTwo={t("operate.titleLineTwo")}
+          body={operateBody}
           imageSrc="/images/operate-bg.png"
           imageAlt="A bright living room with a coastal view"
           imageOverlay
-          decorativeText="OPERATE"
+          decorativeText={t("operate.decorativeText")}
           decorativeAlign="left"
+          ctaLabel={t("readMore")}
         />
 
         <PropertyToProfit />
 
         <BlogSection
           id="owner-app"
-          titleLineOne="Owner App"
-          body={BLOG_BODY}
+          titleLineOne={t("ownerApp.titleLineOne")}
+          body={ownerAppBody}
           imageSrc="/images/owner-app.png"
           imageAlt="Hand holding a phone showing the Rent Royz owner app"
           imageContain
           reverse
-          decorativeText="VALUES"
+          decorativeText={t("ownerApp.decorativeText")}
           decorativeAlign="right"
+          ctaLabel={t("readMore")}
         />
 
         <Operations />
         <Pillars />
-        <Testimonials />
         <ContactCta />
       </main>
       <Footer />

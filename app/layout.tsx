@@ -1,18 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { ReactNode } from "react";
 import "./globals.css";
-
-const sans = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const display = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Rent Royz — We Manage. You Earn.",
@@ -27,14 +15,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en" className={`${sans.variable} ${display.variable}`}>
-      <body className="bg-ink text-sand">{children}</body>
-    </html>
-  );
+// This root layout intentionally renders children directly without <html>/<body>.
+// The real html element lives in [locale]/layout.tsx so it can read the locale
+// param and set lang + dir per-locale (static generation can't read headers()).
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return children;
 }

@@ -1,28 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { calm, revealUp, stagger } from "@/lib/motion";
 
-const STEPS = [
-  {
-    title: "Register & Prepare",
-    body: "Submit your property once. We handle setup, pricing, and readiness.",
-    Icon: DocumentIcon,
-  },
-  {
-    title: "List & Operate",
-    body:
-      "Your property is published across all major booking platforms, and operation is all handled continuously.",
-    Icon: GearIcon,
-  },
-  {
-    title: "Profit",
-    body: "Revenue is generated, optimized, and paid out with full visibility.",
-    Icon: TrendUpIcon,
-  },
-];
+const STEP_ICONS = [DocumentIcon, GearIcon, TrendUpIcon];
 
 export default function PropertyToProfit() {
+  const t = useTranslations("propertyToProfit");
+  const steps = t.raw("steps") as { title: string; body: string }[];
+
   return (
     <section
       id="how-it-works"
@@ -36,9 +23,9 @@ export default function PropertyToProfit() {
           transition={{ duration: 0.8, ease: calm }}
           className="text-center font-display text-4xl leading-[1.05] tracking-tight text-ink-deep sm:text-5xl lg:text-6xl"
         >
-          From Property to Profit
+          {t("titleLineOne")}
           <br />
-          <span className="font-semibold">Smoothly</span>
+          <span className="font-semibold">{t("titleLineTwo")}</span>
         </motion.h2>
 
         <motion.ol
@@ -48,28 +35,33 @@ export default function PropertyToProfit() {
           viewport={{ once: true, margin: "-80px" }}
           className="relative mt-16 grid grid-cols-1 gap-12 sm:gap-16 lg:mt-20 lg:grid-cols-3 lg:gap-8"
         >
-          {/* Wavy connectors — visible only at lg+, between cards */}
-          <Connector className="hidden lg:block lg:absolute lg:left-[16.66%] lg:top-[42px] lg:w-[16.66%]" />
-          <Connector className="hidden lg:block lg:absolute lg:left-[66.66%] lg:top-[42px] lg:w-[16.66%]" />
+          {/* Wavy connectors — visible only at lg+, between cards. Mirror
+              horizontally in RTL so the curve still flows left → right
+              relative to step order. */}
+          <Connector className="hidden lg:block lg:absolute lg:left-[16.66%] lg:top-[42px] lg:w-[16.66%] rtl:lg:scale-x-[-1]" />
+          <Connector className="hidden lg:block lg:absolute lg:left-[66.66%] lg:top-[42px] lg:w-[16.66%] rtl:lg:scale-x-[-1]" />
 
-          {STEPS.map(({ title, body, Icon }, i) => (
-            <motion.li
-              key={title}
-              variants={revealUp}
-              className="flex flex-col items-center text-center lg:items-start lg:text-left"
-            >
-              <div className="flex h-[88px] w-[88px] items-center justify-center rounded-3xl bg-[#51787a]/15">
-                <Icon className="h-11 w-11 text-ink-deep" />
-              </div>
-              <h3 className="mt-8 font-display text-xl font-semibold tracking-tight text-ink-deep sm:text-2xl">
-                {title}
-              </h3>
-              <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-deep/70 sm:text-base lg:max-w-[26ch]">
-                {body}
-              </p>
-              <span className="sr-only">Step {i + 1}</span>
-            </motion.li>
-          ))}
+          {steps.map(({ title, body }, i) => {
+            const Icon = STEP_ICONS[i];
+            return (
+              <motion.li
+                key={title}
+                variants={revealUp}
+                className="flex flex-col items-center text-center lg:items-start lg:text-start"
+              >
+                <div className="flex h-[88px] w-[88px] items-center justify-center rounded-3xl bg-[#51787a]/15">
+                  <Icon className="h-11 w-11 text-ink-deep" />
+                </div>
+                <h3 className="mt-8 font-display text-xl font-semibold tracking-tight text-ink-deep sm:text-2xl">
+                  {title}
+                </h3>
+                <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-deep/70 sm:text-base lg:max-w-[26ch]">
+                  {body}
+                </p>
+                <span className="sr-only">Step {i + 1}</span>
+              </motion.li>
+            );
+          })}
         </motion.ol>
       </div>
     </section>

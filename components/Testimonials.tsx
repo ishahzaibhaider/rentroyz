@@ -2,41 +2,29 @@
 
 import { useRef } from "react";
 import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 import { calm, revealUp, stagger } from "@/lib/motion";
 
-const TESTIMONIALS = [
-  {
-    quote:
-      "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.",
-    name: "John Doe",
-    title: "Accountant",
-    avatar: "/avatars/john-doe.png",
-  },
-  {
-    quote:
-      "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.",
-    name: "John Smith",
-    title: "Journalist, HWO News",
-    avatar: "/avatars/john-smith.png",
-  },
-  {
-    quote:
-      "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.",
-    name: "Tamara Bellis",
-    title: "Managing Director, JTH",
-    avatar: "/avatars/tamara-bellis.png",
-  },
+const AVATARS = [
+  "/avatars/john-doe.png",
+  "/avatars/john-smith.png",
+  "/avatars/tamara-bellis.png",
 ];
 
 export default function Testimonials() {
+  const t = useTranslations("testimonials");
+  const locale = useLocale();
+  const items = t.raw("items") as { quote: string; name: string; title: string }[];
   const scrollerRef = useRef<HTMLUListElement>(null);
 
-  const scrollBy = (dir: 1 | -1) => {
+  const scrollBy = (visualDir: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
     const card = el.querySelector<HTMLElement>("[data-card]");
     const step = card ? card.offsetWidth + 32 : el.clientWidth * 0.9;
-    el.scrollBy({ left: step * dir, behavior: "smooth" });
+    // Invert direction in RTL so "Next" still moves forward in reading order.
+    const physical = locale === "ar" ? -visualDir : visualDir;
+    el.scrollBy({ left: step * physical, behavior: "smooth" });
   };
 
   return (
@@ -53,12 +41,12 @@ export default function Testimonials() {
           className="max-w-3xl"
         >
           <h2 className="font-display text-4xl leading-[1.1] tracking-tight text-ink-deep sm:text-5xl lg:text-6xl">
-            Real Stories,{" "}
-            <span className="font-semibold italic">Real Experiences</span>
+            {t("titleLineOne")}{" "}
+            <span className="font-semibold italic">{t("titleLineTwo")}</span>
           </h2>
           <div className="mt-5 h-px w-56 bg-ember/60" />
           <p className="mt-6 text-lg text-ink-deep/55 sm:text-xl">
-            Here some awesome feedback from our customers
+            {t("tagline")}
           </p>
         </motion.div>
 
@@ -68,32 +56,32 @@ export default function Testimonials() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="mt-24 flex snap-x snap-mandatory gap-8 overflow-x-auto pb-6 pl-2 pt-12 [-ms-overflow-style:none] [scrollbar-width:none] lg:overflow-visible [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-3 lg:gap-8"
+          className="mt-24 flex snap-x snap-mandatory gap-8 overflow-x-auto pb-6 ps-2 pt-12 [-ms-overflow-style:none] [scrollbar-width:none] lg:overflow-visible [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-3 lg:gap-8"
         >
-          {TESTIMONIALS.map((t) => (
+          {items.map((item, i) => (
             <motion.li
-              key={t.name}
+              key={item.name}
               data-card
               variants={revealUp}
               className="relative w-[85vw] max-w-[420px] shrink-0 snap-center rounded-xl bg-white px-8 pb-10 pt-16 shadow-[0_8px_24px_rgba(15,31,36,0.06)] sm:w-[70vw] lg:w-auto lg:max-w-none"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={t.avatar}
+                src={AVATARS[i]}
                 alt=""
-                className="absolute -top-12 left-8 h-24 w-24 rounded-full border-4 border-sand-soft object-cover shadow-md"
+                className="absolute -top-12 start-8 h-24 w-24 rounded-full border-4 border-sand-soft object-cover shadow-md"
               />
               <p className="text-base leading-relaxed text-ink-deep/65">
-                {t.quote}
+                {item.quote}
               </p>
               <div className="mt-6 flex gap-1" aria-label="5 out of 5 stars">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <StarIcon key={i} className="h-5 w-5 text-ember" />
+                {Array.from({ length: 5 }).map((_, j) => (
+                  <StarIcon key={j} className="h-5 w-5 text-ember" />
                 ))}
               </div>
               <div className="mt-6">
-                <p className="font-display text-xl text-ink-deep">{t.name}</p>
-                <p className="mt-1 text-sm text-ink-deep/55">{t.title}</p>
+                <p className="font-display text-xl text-ink-deep">{item.name}</p>
+                <p className="mt-1 text-sm text-ink-deep/55">{item.title}</p>
               </div>
             </motion.li>
           ))}
@@ -103,18 +91,18 @@ export default function Testimonials() {
           <button
             type="button"
             onClick={() => scrollBy(-1)}
-            aria-label="Previous testimonial"
+            aria-label={t("prev")}
             className="flex h-12 w-12 items-center justify-center rounded-full border border-ink-deep/15 text-ink-deep transition-colors duration-300 ease-calm hover:border-ink-deep/40 hover:bg-white"
           >
-            <ChevronIcon className="h-5 w-5 -rotate-90" />
+            <ChevronIcon className="h-5 w-5 -rotate-90 rtl:rotate-90" />
           </button>
           <button
             type="button"
             onClick={() => scrollBy(1)}
-            aria-label="Next testimonial"
+            aria-label={t("next")}
             className="flex h-12 w-12 items-center justify-center rounded-full border border-ink-deep/15 text-ink-deep transition-colors duration-300 ease-calm hover:border-ink-deep/40 hover:bg-white"
           >
-            <ChevronIcon className="h-5 w-5 rotate-90" />
+            <ChevronIcon className="h-5 w-5 rotate-90 rtl:-rotate-90" />
           </button>
         </div>
       </div>

@@ -1,0 +1,149 @@
+{
+  "nav": {
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "signIn": "Sign in",
+    "register": "Register",
+    "english": "English",
+    "arabic": "العربية"
+  },
+  "transformation": {
+    "eyebrow": "Property management — Saudi Arabia",
+    "heroTitle": "We Manage.",
+    "heroSubtitle": "You Earn.",
+    "heroBody": "Manage properties. Minus the headaches. We furnish your apartment, list it on Airbnb and Booking.com, and handle every guest — so you earn without lifting a finger.",
+    "cta1": "Get a Revenue Estimate",
+    "cta2": "List Your Property",
+    "scrollLong": "Scroll to see the transformation",
+    "scrollShort": "Scroll",
+    "stages": [
+      {
+        "eyebrow": "01 — Onboard",
+        "title": "We furnish it.",
+        "body": "From a bare apartment to a fully styled, hospitality-grade space. Our team handles design, sourcing, and installation."
+      },
+      {
+        "eyebrow": "02 — List",
+        "title": "We list it.",
+        "body": "We publish your property on Airbnb, Booking.com, and our own platform — with professional photography and copy that converts."
+      },
+      {
+        "eyebrow": "03 — Manage",
+        "title": "We manage it.",
+        "body": "Guest communication, check-in, cleaning, maintenance, and revenue optimisation. You see the earnings, not the work."
+      }
+    ],
+    "closingTitle": "We Manage.",
+    "closingSubtitle": "You Earn."
+  },
+  "blog": {
+    "readMore": "Read More",
+    "operate": {
+      "titleLineOne": "Built to Operate,",
+      "titleLineTwo": "Not Just Manage",
+      "body": [
+        "RentRoyz is a professional property operations company focused on short-term and mid-term rentals. We take full responsibility for performance, guest experience, and asset care.",
+        "Our model is simple: you own the property, we run the operation, and profits are shared transparently.",
+        "We rely on smart systems, structured processes, and hands-on execution to deliver consistent results."
+      ],
+      "decorativeText": "OPERATE"
+    },
+    "ownerApp": {
+      "titleLineOne": "Owner App",
+      "body": [
+        "Real-time insights into your property performance with our intuitive owner dashboard.",
+        "Track income, expenses, and occupancy rates at a glance.",
+        "Receive instant notifications for important events and updates."
+      ],
+      "decorativeText": "VALUES"
+    }
+  },
+  "propertyToProfit": {
+    "titleLineOne": "From Property to Profit",
+    "titleLineTwo": "Smoothly",
+    "steps": [
+      {
+        "title": "Register & Prepare",
+        "body": "Submit your property once. We handle setup, pricing, and readiness."
+      },
+      {
+        "title": "List & Operate",
+        "body": "Your property is published across all major booking platforms, and operation is all handled continuously."
+      },
+      {
+        "title": "Profit",
+        "body": "Revenue is generated, optimized, and paid out with full visibility."
+      }
+    ]
+  },
+  "operations": {
+    "titleLineOne": "We Handle",
+    "titleLineTwo": "Everything",
+    "tagline": "Every operational detail — managed with precision",
+    "items": {
+      "pricing": "Pricing and yield optimization",
+      "cleaning": "Cleaning cycles & quality control",
+      "platform": "Platform synchronization",
+      "screening": "Guest screening & communication",
+      "maintenance": "Maintenance & issue resolution",
+      "licensing": "Licensing & compliance",
+      "reviews": "Reviews & reputation management",
+      "reporting": "Owner reporting & payouts",
+      "checkin": "Check-in & check-out coordination"
+    }
+  },
+  "pillars": {
+    "titleLineOne": "What Drives Us",
+    "titleLineTwo": "Forward",
+    "items": [
+      {
+        "title": "Smooth",
+        "body": "Every process is designed to work quietly and efficiently, without friction."
+      },
+      {
+        "title": "Trust",
+        "body": "Clear operations, measurable performance, and transparent revenue sharing."
+      },
+      {
+        "title": "Care",
+        "body": "Your property is treated as a long term asset, not a short-term listing."
+      }
+    ]
+  },
+  "testimonials": {
+    "titleLineOne": "Real Stories,",
+    "titleLineTwo": "Real Experiences",
+    "tagline": "Here some awesome feedback from our customers",
+    "prev": "Previous testimonial",
+    "next": "Next testimonial",
+    "items": [
+      {
+        "quote": "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.",
+        "name": "John Doe",
+        "title": "Accountant"
+      },
+      {
+        "quote": "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.",
+        "name": "John Smith",
+        "title": "Journalist, HWO News"
+      },
+      {
+        "quote": "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.",
+        "name": "Tamara Bellis",
+        "title": "Managing Director, JTH"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Let's Talk",
+    "subtitle": "Schedule a consultation to discuss your property",
+    "scheduleBtn": "Schedule Meeting",
+    "contactBtn": "Contact Us",
+    "email": "hello@rentroyz.com",
+    "phone": "+1 (234) 567-890"
+  },
+  "footer": {
+    "copyright": "© Rent Royz, All rights reserved."
+  }
+}
