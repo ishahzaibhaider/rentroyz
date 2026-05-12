@@ -1,8 +1,7 @@
 import {
   Inter,
   Space_Grotesk,
-  Cairo,
-  Aref_Ruqaa,
+  IBM_Plex_Sans_Arabic,
 } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -22,19 +21,13 @@ const display = Space_Grotesk({
   display: "swap",
 });
 
-const arabicBody = Cairo({
+// IBM Plex Sans Arabic — modern professional Arabic sans, common in Saudi/Gulf
+// brands. One font covers both body and display; weight contrast (400 for body,
+// 600/700 for headings) creates the hierarchy.
+const arabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-arabic",
-  display: "swap",
-});
-
-// Aref Ruqaa = Diwani-influenced calligraphic Arabic font. Used for the
-// hero/section headings only — body keeps Cairo (above) for readability.
-const arabicDisplay = Aref_Ruqaa({
-  subsets: ["arabic"],
-  weight: ["400", "700"],
-  variable: "--font-arabic-display",
   display: "swap",
 });
 
@@ -60,7 +53,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${sans.variable} ${display.variable} ${arabicBody.variable} ${arabicDisplay.variable}`}
+      className={`${sans.variable} ${display.variable} ${arabic.variable}`}
     >
       <body className="bg-ink text-sand">
         <NextIntlClientProvider messages={messages} locale={locale}>
