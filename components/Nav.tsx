@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import Wordmark from "./ui/Wordmark";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://dev.rentroyz.com";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://owner.rentroyz.com";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -64,7 +64,7 @@ export default function Nav() {
             <LanguageSwitcher />
             <span className="h-4 w-px bg-sand/20" aria-hidden />
             <a
-              href={`${APP_URL}/auth/register`}
+              href={`${APP_URL}/auth/login`}
               className="text-sm text-sand/80 transition hover:text-sand"
             >
               {t("signIn")}
@@ -116,7 +116,7 @@ export default function Nav() {
             <div className="flex justify-center pb-2">
               <LanguageSwitcher />
             </div>
-            <a href={`${APP_URL}/auth/register`} className="rounded-full border border-sand/30 px-6 py-3 text-center text-sand">
+            <a href={`${APP_URL}/auth/login`} className="rounded-full border border-sand/30 px-6 py-3 text-center text-sand">
               {t("signIn")}
             </a>
             <a href={`${APP_URL}/auth/register`} className="rounded-full bg-sand px-6 py-3 text-center font-medium text-ink-deep">

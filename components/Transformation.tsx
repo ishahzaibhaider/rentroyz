@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { useTranslations } from "next-intl";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://dev.rentroyz.com";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://owner.rentroyz.com";
 
 // Multiplier on scroll-to-video mapping. >1 means the video advances faster
 // than the scroll — small scroll moves cover more video. The video finishes
