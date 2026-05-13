@@ -118,6 +118,9 @@ export default function Transformation() {
           v.currentTime = Math.max(0, Math.min(dur - 0.001, p * VIDEO_SPEED * dur));
         }
         setVideoReady(true);
+        // Tell the SplashScreen the hero video is loaded so it can dismiss
+        // early (instead of waiting for its max timeout).
+        window.dispatchEvent(new Event("rentroyz:video-ready"));
       } catch {
         if (!cancelled) setHasVideo(false);
       } finally {

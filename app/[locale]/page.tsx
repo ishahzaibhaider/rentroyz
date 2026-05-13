@@ -9,6 +9,7 @@ import RevenueEstimator from "@/components/RevenueEstimator";
 import ContactCta from "@/components/ContactCta";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
+import SplashScreen from "@/components/SplashScreen";
 
 export default async function Home({
   params: { locale },
@@ -22,6 +23,7 @@ export default async function Home({
 
   return (
     <SmoothScroll>
+      <SplashScreen />
       <Nav />
       <main>
         <Transformation />
