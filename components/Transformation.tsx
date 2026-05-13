@@ -34,6 +34,12 @@ export default function Transformation() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasVideo, setHasVideo] = useState(true);
   const [videoReady, setVideoReady] = useState(false);
+  // videoSrc is determined client-side (need window.matchMedia). Initialized
+  // to null so on SSR/first render the <video> tag is not emitted yet — we
+  // render it once we know which file to serve. This is critical for iOS:
+  // setting src via JS on an already-rendered <video> element is unreliable;
+  // iOS handles src-from-JSX much better.
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const targetTime = useRef(0);
   const rafScheduled = useRef(false);
 
@@ -41,6 +47,13 @@ export default function Transformation() {
     target: ref,
     offset: ["start start", "end end"],
   });
+
+  useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    setVideoSrc(
+      isMobile ? "/video/transform-mobile.mp4" : "/video/transform.mp4"
+    );
+  }, []);
 
   // Seek is gated on videoReady so it only fires once the full blob is in
   // memory — preventing the cancelled-byte-range death spiral on CDNs.
@@ -62,31 +75,31 @@ export default function Transformation() {
     });
   });
 
-  // Wire the video source directly (no blob preload). Reason: iOS Safari
-  // does NOT play video from blob URLs reliably — it requires the source to
-  // support HTTP byte-range requests for seeking, and blob: URLs can't serve
-  // partial bytes. Vercel's static CDN does serve range requests natively,
-  // so seek-on-scroll still works smoothly via the direct URL.
+  // iOS Safari specifics being addressed here:
   //
-  // The <link rel="preload" as="video"> in the layout head warms the browser
-  // cache so the <video src> fetch is effectively instant after first paint.
+  // 1. iOS Safari silently downgrades `preload="auto"` to `preload="none"` on
+  //    cellular networks. Result: setting src does not start downloading the
+  //    file on its own. We call .load() explicitly to force the issue.
+  //
+  // 2. iOS Safari will NOT render frames on currentTime changes alone — the
+  //    video pipeline has to be "woken up" by a .play() call first. After
+  //    that, even when paused, currentTime writes will render the frame at
+  //    that timestamp. Without this play+pause warm-up, our scroll-driven
+  //    scrubbing produces a black screen on iOS while working fine in Chrome.
+  //
+  // 3. Muted autoplay is allowed on iOS without user gesture (the muted
+  //    attribute on the <video> element grants the permission), so the
+  //    play() call here will not be blocked.
   useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
-
-    // Pick the smaller mobile-optimized encode on phones; full-resolution
-    // desktop encode otherwise.
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const videoSrc = isMobile
-      ? "/video/transform-mobile.mp4"
-      : "/video/transform.mp4";
-
-    console.log("[transformation] mount — direct src", videoSrc);
-    v.src = videoSrc;
+    if (!v || !videoSrc) return;
 
     let cancelled = false;
 
-    const onLoadedMetadata = () => {
+    // Force iOS to start the download even when it would otherwise lazily wait.
+    v.load();
+
+    const markReady = () => {
       if (cancelled) return;
       const dur = v.duration;
       if (Number.isFinite(dur) && dur > 0) {
@@ -96,11 +109,25 @@ export default function Transformation() {
           Math.min(dur - 0.001, p * VIDEO_SPEED * dur)
         );
       }
-      console.log("[transformation] loadedmetadata, marking ready");
       setVideoReady(true);
-      // Tell the SplashScreen the hero video is loaded so it can dismiss
-      // early (instead of waiting for its max timeout).
       window.dispatchEvent(new Event("rentroyz:video-ready"));
+    };
+
+    const onLoadedMetadata = async () => {
+      if (cancelled) return;
+      // The play+pause dance that iOS Safari needs. Muted autoplay is allowed
+      // without a user gesture, so the play() promise should resolve. If it
+      // rejects (rare), we still proceed — most platforms work without it.
+      try {
+        const playPromise = v.play();
+        if (playPromise !== undefined) await playPromise;
+        v.pause();
+      } catch {
+        // Autoplay blocked / interrupted — continue regardless; non-iOS
+        // browsers don't need the warm-up.
+      }
+      if (cancelled) return;
+      markReady();
     };
 
     const onError = () => {
@@ -117,7 +144,7 @@ export default function Transformation() {
       v.removeEventListener("loadedmetadata", onLoadedMetadata);
       v.removeEventListener("error", onError);
     };
-  }, [scrollYProgress]);
+  }, [videoSrc, scrollYProgress]);
 
   const fallbackBg = useTransform(
     scrollYProgress,
@@ -138,15 +165,22 @@ export default function Transformation() {
         id="transformation"
         className="sticky top-0 h-[100svh] w-full overflow-hidden"
       >
-        {hasVideo && (
+        {hasVideo && videoSrc && (
           <video
             ref={videoRef}
+            // `key={videoSrc}` forces a clean element remount if the source
+            // ever changes (it shouldn't after first mount, but guards against
+            // viewport-resize edge cases). Critical: `src` is in JSX, not set
+            // via setAttribute from useEffect — iOS Safari handles JSX-rendered
+            // src much more reliably.
+            key={videoSrc}
+            src={videoSrc}
             className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
             style={{ opacity: videoReady ? 1 : 0 }}
             muted
+            autoPlay
             playsInline
             preload="auto"
-            disablePictureInPicture
           />
         )}
 
