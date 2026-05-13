@@ -191,6 +191,9 @@
     "phone": "+966 55 650 0470"
   },
   "footer": {
-    "copyright": "© Rent Royz, All rights reserved."
+    "copyright": "© Rent Royz, All rights reserved.",
+    "paymentsLabel": "Payment Methods",
+    "vat": "VAT",
+    "commerceRegistration": "Commerce Registration"
   }
 }
