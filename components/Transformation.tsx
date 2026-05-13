@@ -115,13 +115,20 @@ export default function Transformation() {
 
     const onLoadedMetadata = async () => {
       if (cancelled) return;
-      // The play+pause dance that iOS Safari needs. Muted autoplay is allowed
-      // without a user gesture, so the play() promise should resolve. If it
-      // rejects (rare), we still proceed — most platforms work without it.
+      // The iOS Safari trick: keep the video in a "playing" state at zero
+      // playback rate. We CANNOT call .pause() — iOS draws a native "tap to
+      // play" overlay (outside the DOM, so CSS can't hide it) on any paused
+      // video. Setting playbackRate = 0 freezes time advancement while iOS
+      // still considers the element to be playing — no overlay. Manual
+      // currentTime writes from the scroll handler still work because they
+      // are independent of playbackRate.
       try {
+        v.playbackRate = 0;
         const playPromise = v.play();
         if (playPromise !== undefined) await playPromise;
-        v.pause();
+        // Re-assert playbackRate = 0 after play resolves; some browsers
+        // reset it back to 1 when transitioning to playing.
+        v.playbackRate = 0;
       } catch {
         // Autoplay blocked / interrupted — continue regardless; non-iOS
         // browsers don't need the warm-up.
