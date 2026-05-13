@@ -66,13 +66,29 @@ export default function Transformation() {
   // src, seeks past the initial HTTP buffer issue new byte-range requests that
   // get cancelled by subsequent seeks, freezing the video. A blob URL is
   // backed by an in-memory buffer, so seeks are instant — same as local disk.
+  //
+  // Safety: cap the wait at 15s. On a stuck mobile connection we give up and
+  // let the gradient fallback be the final experience instead of holding state
+  // forever (which would slowly leak memory on long sessions and never trigger
+  // a UX recovery path).
   useEffect(() => {
     let cancelled = false;
     let blobUrl: string | undefined;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    // Pick the smaller mobile-optimized encode on phones; full-resolution
+    // desktop encode otherwise. Decided at mount so it survives re-renders.
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const videoSrc = isMobile
+      ? "/video/transform-mobile.mp4"
+      : "/video/transform.mp4";
 
     (async () => {
       try {
-        const res = await fetch("/video/transform.mp4");
+        const res = await fetch(videoSrc, {
+          signal: controller.signal,
+        });
         if (!res.ok) throw new Error(`status ${res.status}`);
         const blob = await res.blob();
         if (cancelled) return;
@@ -104,11 +120,15 @@ export default function Transformation() {
         setVideoReady(true);
       } catch {
         if (!cancelled) setHasVideo(false);
+      } finally {
+        clearTimeout(timeoutId);
       }
     })();
 
     return () => {
       cancelled = true;
+      clearTimeout(timeoutId);
+      controller.abort();
       if (blobUrl) URL.revokeObjectURL(blobUrl);
     };
   }, [scrollYProgress]);
