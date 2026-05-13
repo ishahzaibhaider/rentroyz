@@ -55,6 +55,30 @@ export default async function LocaleLayout({
       dir={dir}
       className={`${sans.variable} ${display.variable} ${arabic.variable}`}
     >
+      <head>
+        {/* Pre-warm the hero video. The browser fires these requests as soon
+            as the HTML is parsed — before React hydrates, before the splash
+            even renders — so the bytes are already on their way (or in cache)
+            by the time Transformation does its blob fetch. The `media`
+            attribute makes each browser download only the size-appropriate
+            encode: phones get the 4.7 MB mobile file, larger screens get the
+            6.9 MB desktop file. Same files Transformation fetches; the second
+            fetch hits the disk cache instead of the network. */}
+        <link
+          rel="preload"
+          as="video"
+          type="video/mp4"
+          href="/video/transform-mobile.mp4"
+          media="(max-width: 768px)"
+        />
+        <link
+          rel="preload"
+          as="video"
+          type="video/mp4"
+          href="/video/transform.mp4"
+          media="(min-width: 769px)"
+        />
+      </head>
       <body className="bg-ink text-sand">
         <NextIntlClientProvider messages={messages} locale={locale}>
           {children}
