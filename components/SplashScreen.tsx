@@ -8,7 +8,12 @@ import Wordmark from "./ui/Wordmark";
 // Hard ceiling: splash never holds the page longer than this, even if the
 // video preload hangs forever. Users on broken connections still get to see
 // the site (with the gradient fallback instead of the video).
-const MAX_DURATION_MS = 4000;
+//
+// Tuned to 8s because the hero video is ~4.7-6.9 MB and mobile cellular often
+// needs 5-7s to fully download + decode metadata before `videoReady` fires.
+// A 4s ceiling caused a visible "splash gone but video not there yet" gap on
+// mobile — 8s lets the video-ready event win on most connections.
+const MAX_DURATION_MS = 8000;
 // Floor so the splash never flashes for a few frames on a fast connection —
 // it should feel intentional, not buggy.
 const MIN_DURATION_MS = 800;
