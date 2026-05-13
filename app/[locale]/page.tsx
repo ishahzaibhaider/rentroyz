@@ -26,7 +26,11 @@ export default async function Home({
       <SplashScreen />
       <Nav />
       <main>
-        <Transformation />
+        {/* `key={locale}` forces a clean remount on locale change. Without it,
+            next-intl's client-side router preserves the Transformation instance
+            across navigations and the old (revoked) blob URL stays attached to
+            the video element — the new locale's video never appears. */}
+        <Transformation key={locale} />
 
         <BlogSection
           id="about"

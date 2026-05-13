@@ -77,15 +77,24 @@ export default function Transformation() {
       ? "/video/transform-mobile.mp4"
       : "/video/transform.mp4";
 
+    console.log("[transformation] mount — fetching", videoSrc);
+
     (async () => {
       try {
         const res = await fetch(videoSrc);
         if (!res.ok) throw new Error(`status ${res.status}`);
         const blob = await res.blob();
-        if (cancelled) return;
+        if (cancelled) {
+          console.log("[transformation] cancelled before blob URL");
+          return;
+        }
         blobUrl = URL.createObjectURL(blob);
+        console.log("[transformation] blob ready", { size: blob.size, blobUrl });
         const v = videoRef.current;
-        if (!v) return;
+        if (!v) {
+          console.warn("[transformation] videoRef.current was null when blob arrived");
+          return;
+        }
         v.src = blobUrl;
         await new Promise<void>((resolve, reject) => {
           const ok = () => {
@@ -108,6 +117,7 @@ export default function Transformation() {
           const p = scrollYProgress.get();
           v.currentTime = Math.max(0, Math.min(dur - 0.001, p * VIDEO_SPEED * dur));
         }
+        console.log("[transformation] loadedmetadata, marking ready");
         setVideoReady(true);
         // Tell the SplashScreen the hero video is loaded so it can dismiss
         // early (instead of waiting for its max timeout).
