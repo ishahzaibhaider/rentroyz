@@ -37,6 +37,20 @@ html[dir="rtl"] .font-sans {
   letter-spacing: 0;
 }
 
+/* Letter-spacing breaks Arabic ligatures (the natural joins between letters
+   get torn apart into disconnected glyphs). Tailwind tracking utilities
+   need to be neutralized in RTL. The class*= selector catches every
+   `tracking-...` variant including arbitrary values like tracking-[0.3em]. */
+html[dir="rtl"] [class*="tracking-"] {
+  letter-spacing: 0 !important;
+}
+
+/* Uppercase has no effect on Arabic glyphs but the CSS still gets applied
+   and may interact weirdly with some fonts — strip it in RTL. */
+html[dir="rtl"] .uppercase {
+  text-transform: none;
+}
+
 ::selection {
   background: var(--ember);
   color: var(--ink-deep);
