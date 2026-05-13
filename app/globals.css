@@ -51,6 +51,21 @@ html[dir="rtl"] .uppercase {
   text-transform: none;
 }
 
+/* Hide iOS Safari's central "tap to play" overlay. Our hero video is always
+   paused by design (scroll drives currentTime, not playback), and iOS would
+   otherwise show a big circular play button covering the video. Targets the
+   WebKit pseudo-elements that draw those native media controls. */
+video::-webkit-media-controls,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 ::selection {
   background: var(--ember);
   color: var(--ink-deep);
