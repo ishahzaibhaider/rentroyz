@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useLocale } from "next-intl";
 import Wordmark from "./ui/Wordmark";
 
-const SESSION_KEY = "rentroyz:splash-seen";
 // Hard ceiling: splash never holds the page longer than this, even if the
 // video preload hangs forever. Users on broken connections still get to see
 // the site (with the gradient fallback instead of the video).
@@ -14,17 +14,27 @@ const MAX_DURATION_MS = 4000;
 const MIN_DURATION_MS = 800;
 
 export default function SplashScreen() {
+  const locale = useLocale();
   // We start `visible = true` so the splash is part of the initial server
   // render and there's no flash of unsplashed content on first paint.
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    // Already shown earlier in this session (in-page navigation, refresh
-    // during the same tab) — dismiss immediately, no second show.
-    if (sessionStorage.getItem(SESSION_KEY)) {
+    // Key is per-locale so switching language re-shows the splash. The video
+    // has to reload on locale change (component remounts → fresh blob fetch),
+    // and the splash gives users a clean transition instead of a flash of
+    // dark gradient while the new page settles.
+    const sessionKey = `rentroyz:splash-seen:${locale}`;
+
+    if (sessionStorage.getItem(sessionKey)) {
       setVisible(false);
       return;
     }
+
+    // Reset visibility when we land on a not-yet-seen locale (otherwise the
+    // hide animation from the previous locale's dismissal could leave this
+    // mount in a hidden state).
+    setVisible(true);
 
     const start = Date.now();
     let dismissTimer: ReturnType<typeof setTimeout> | undefined;
@@ -35,7 +45,7 @@ export default function SplashScreen() {
       const wait = Math.max(0, MIN_DURATION_MS - elapsed);
       dismissTimer = setTimeout(() => {
         try {
-          sessionStorage.setItem(SESSION_KEY, "1");
+          sessionStorage.setItem(sessionKey, "1");
         } catch {
           // sessionStorage can throw in some private-browsing modes — ignore.
         }
@@ -53,7 +63,7 @@ export default function SplashScreen() {
       if (dismissTimer) clearTimeout(dismissTimer);
       window.removeEventListener("rentroyz:video-ready", onVideoReady);
     };
-  }, []);
+  }, [locale]);
 
   return (
     <AnimatePresence>
