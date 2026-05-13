@@ -62,75 +62,60 @@ export default function Transformation() {
     });
   });
 
-  // Fully fetch the video as a blob before enabling scrubbing. With a network
-  // src, seeks past the initial HTTP buffer issue new byte-range requests that
-  // get cancelled by subsequent seeks, freezing the video. A blob URL is
-  // backed by an in-memory buffer, so seeks are instant — same as local disk.
+  // Wire the video source directly (no blob preload). Reason: iOS Safari
+  // does NOT play video from blob URLs reliably — it requires the source to
+  // support HTTP byte-range requests for seeking, and blob: URLs can't serve
+  // partial bytes. Vercel's static CDN does serve range requests natively,
+  // so seek-on-scroll still works smoothly via the direct URL.
+  //
+  // The <link rel="preload" as="video"> in the layout head warms the browser
+  // cache so the <video src> fetch is effectively instant after first paint.
   useEffect(() => {
-    let cancelled = false;
-    let blobUrl: string | undefined;
+    const v = videoRef.current;
+    if (!v) return;
 
     // Pick the smaller mobile-optimized encode on phones; full-resolution
-    // desktop encode otherwise. Decided at mount so it survives re-renders.
+    // desktop encode otherwise.
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const videoSrc = isMobile
       ? "/video/transform-mobile.mp4"
       : "/video/transform.mp4";
 
-    console.log("[transformation] mount — fetching", videoSrc);
+    console.log("[transformation] mount — direct src", videoSrc);
+    v.src = videoSrc;
 
-    (async () => {
-      try {
-        const res = await fetch(videoSrc);
-        if (!res.ok) throw new Error(`status ${res.status}`);
-        const blob = await res.blob();
-        if (cancelled) {
-          console.log("[transformation] cancelled before blob URL");
-          return;
-        }
-        blobUrl = URL.createObjectURL(blob);
-        console.log("[transformation] blob ready", { size: blob.size, blobUrl });
-        const v = videoRef.current;
-        if (!v) {
-          console.warn("[transformation] videoRef.current was null when blob arrived");
-          return;
-        }
-        v.src = blobUrl;
-        await new Promise<void>((resolve, reject) => {
-          const ok = () => {
-            v.removeEventListener("loadedmetadata", ok);
-            v.removeEventListener("error", err);
-            resolve();
-          };
-          const err = () => {
-            v.removeEventListener("loadedmetadata", ok);
-            v.removeEventListener("error", err);
-            reject(new Error("metadata failed"));
-          };
-          v.addEventListener("loadedmetadata", ok);
-          v.addEventListener("error", err);
-        });
-        if (cancelled) return;
-        // Sync video to whatever scroll position the user already landed on.
-        const dur = v.duration;
-        if (Number.isFinite(dur) && dur > 0) {
-          const p = scrollYProgress.get();
-          v.currentTime = Math.max(0, Math.min(dur - 0.001, p * VIDEO_SPEED * dur));
-        }
-        console.log("[transformation] loadedmetadata, marking ready");
-        setVideoReady(true);
-        // Tell the SplashScreen the hero video is loaded so it can dismiss
-        // early (instead of waiting for its max timeout).
-        window.dispatchEvent(new Event("rentroyz:video-ready"));
-      } catch (err) {
-        console.error("[transformation] video load failed:", err);
-        if (!cancelled) setHasVideo(false);
+    let cancelled = false;
+
+    const onLoadedMetadata = () => {
+      if (cancelled) return;
+      const dur = v.duration;
+      if (Number.isFinite(dur) && dur > 0) {
+        const p = scrollYProgress.get();
+        v.currentTime = Math.max(
+          0,
+          Math.min(dur - 0.001, p * VIDEO_SPEED * dur)
+        );
       }
-    })();
+      console.log("[transformation] loadedmetadata, marking ready");
+      setVideoReady(true);
+      // Tell the SplashScreen the hero video is loaded so it can dismiss
+      // early (instead of waiting for its max timeout).
+      window.dispatchEvent(new Event("rentroyz:video-ready"));
+    };
+
+    const onError = () => {
+      if (cancelled) return;
+      console.error("[transformation] video element error", v.error);
+      setHasVideo(false);
+    };
+
+    v.addEventListener("loadedmetadata", onLoadedMetadata);
+    v.addEventListener("error", onError);
 
     return () => {
       cancelled = true;
-      if (blobUrl) URL.revokeObjectURL(blobUrl);
+      v.removeEventListener("loadedmetadata", onLoadedMetadata);
+      v.removeEventListener("error", onError);
     };
   }, [scrollYProgress]);
 
