@@ -176,10 +176,16 @@ function HeroPhase({ progress }: { progress: MotionValue<number> }) {
   const opacity = useTransform(progress, [0, 0.02, 0.18, 0.24], [1, 1, 1, 0]);
   const y = useTransform(progress, [0, 0.24], [0, -24]);
   const cueOpacity = useTransform(progress, [0, 0.06, 0.18], [1, 1, 0]);
+  // Disable pointer events once the hero has faded out, so the (now invisible)
+  // overlay can't intercept clicks that the user thinks are landing on the
+  // stages or page below.
+  const pointerEvents = useTransform(opacity, (o) =>
+    o > 0.15 ? "auto" : "none"
+  );
 
   return (
     <motion.div
-      style={{ opacity, y }}
+      style={{ opacity, y, pointerEvents }}
       className="absolute inset-0 z-10 flex items-center px-6 lg:px-16"
     >
       <div className="max-w-2xl [text-shadow:_0_2px_18px_rgb(0_0_0_/_0.55)]">
@@ -196,7 +202,7 @@ function HeroPhase({ progress }: { progress: MotionValue<number> }) {
         </p>
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           <a
-            href="#contact"
+            href="#estimate"
             className="group inline-flex items-center justify-center gap-2 rounded-full bg-sand px-7 py-4 text-sm font-medium text-ink-deep transition-all duration-500 ease-calm hover:bg-ember hover:text-sand"
           >
             {t("cta1")}
@@ -227,7 +233,7 @@ function HeroPhase({ progress }: { progress: MotionValue<number> }) {
 
       <motion.div
         style={{ opacity: cueOpacity }}
-        className="absolute bottom-10 left-6 right-6 flex items-center justify-between text-xs text-sand/60 lg:left-16 lg:right-16"
+        className="pointer-events-none absolute bottom-10 left-6 right-6 flex items-center justify-between text-xs text-sand/60 lg:left-16 lg:right-16"
       >
         <span className="hidden sm:inline">{t("scrollLong")}</span>
         <span className="sm:hidden">{t("scrollShort")}</span>
@@ -260,7 +266,7 @@ function Stage({
   return (
     <motion.div
       style={{ opacity, y }}
-      className="absolute inset-0 z-10 flex items-end px-6 pb-24 sm:items-center sm:pb-0 lg:px-16"
+      className="pointer-events-none absolute inset-0 z-10 flex items-end px-6 pb-24 sm:items-center sm:pb-0 lg:px-16"
     >
       <div className="max-w-xl [text-shadow:_0_2px_18px_rgb(0_0_0_/_0.55)]">
         <p className="font-sans text-xs uppercase tracking-[0.3em] text-ember">
@@ -285,7 +291,7 @@ function ClosingSlogan({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity, scale }}
-      className="absolute inset-0 z-20 flex items-center justify-center px-6"
+      className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-6"
     >
       <h2 className="text-center font-display text-5xl leading-[0.95] tracking-tight text-sand [text-shadow:_0_4px_28px_rgb(0_0_0_/_0.6)] sm:text-7xl lg:text-9xl">
         {t("closingTitle")}

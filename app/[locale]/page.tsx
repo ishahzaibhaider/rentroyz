@@ -5,6 +5,7 @@ import BlogSection from "@/components/BlogSection";
 import PropertyToProfit from "@/components/PropertyToProfit";
 import Operations from "@/components/Operations";
 import Pillars from "@/components/Pillars";
+import RevenueEstimator from "@/components/RevenueEstimator";
 import ContactCta from "@/components/ContactCta";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -55,6 +56,7 @@ export default async function Home({
 
         <Operations />
         <Pillars />
+        <RevenueEstimator />
         <ContactCta />
       </main>
       <Footer />

@@ -135,13 +135,60 @@
       }
     ]
   },
+  "estimator": {
+    "titleLineOne": "Estimate Your",
+    "titleLineTwo": "Revenue",
+    "tagline": "See what your property could earn as a short-stay rental — based on real Airbnb market data.",
+    "cityLabel": "City",
+    "propertyTypeLabel": "Property type",
+    "bedroomsLabel": "Bedrooms",
+    "furnishingLabel": "Furnishing",
+    "submit": "Calculate Estimate",
+    "submitting": "Calculating…",
+    "cities": {
+      "riyadh": "Riyadh",
+      "jeddah": "Jeddah",
+      "dammam": "Dammam",
+      "khobar": "Al Khobar"
+    },
+    "types": {
+      "apartment": "Apartment",
+      "villa": "Villa",
+      "townhouse": "Townhouse",
+      "studio": "Studio"
+    },
+    "bedroomOptions": {
+      "studio": "Studio",
+      "one": "1 bedroom",
+      "two": "2 bedrooms",
+      "three": "3 bedrooms",
+      "four": "4 bedrooms",
+      "five": "5+ bedrooms"
+    },
+    "furnishing": {
+      "standard": "Standard",
+      "premium": "Premium"
+    },
+    "result": {
+      "estimatedAnnualRevenue": "Estimated annual revenue",
+      "occupancyRate": "Average occupancy",
+      "nightlyRate": "Average nightly rate",
+      "rangeLabel": "Range",
+      "low": "Low",
+      "high": "High",
+      "disclaimer": "Market-based estimate. Actual performance varies by season, pricing strategy, and listing quality.",
+      "mockNotice": "Demo mode — connect Airbtics API key for live data.",
+      "scheduleCta": "Schedule a consultation"
+    },
+    "error": "Couldn't generate an estimate. Please try again."
+  },
   "contact": {
     "title": "Let's Talk",
     "subtitle": "Schedule a consultation to discuss your property",
     "scheduleBtn": "Schedule Meeting",
     "contactBtn": "Contact Us",
-    "email": "hello@rentroyz.com",
-    "phone": "+1 (234) 567-890"
+    "email": "info@rentroyz.com",
+    "phone": "+966 55 650 0470"
   },
   "footer": {
     "copyright": "© Rent Royz, All rights reserved."

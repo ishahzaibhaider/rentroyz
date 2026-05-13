@@ -135,13 +135,60 @@
       }
     ]
   },
+  "estimator": {
+    "titleLineOne": "احسب",
+    "titleLineTwo": "إيراداتك",
+    "tagline": "اعرف كم يمكن أن يحقق عقارك كإيجار قصير الأجل — بناءً على بيانات سوق Airbnb الحقيقية.",
+    "cityLabel": "المدينة",
+    "propertyTypeLabel": "نوع العقار",
+    "bedroomsLabel": "غرف النوم",
+    "furnishingLabel": "مستوى التأثيث",
+    "submit": "احسب التقدير",
+    "submitting": "جارٍ الحساب…",
+    "cities": {
+      "riyadh": "الرياض",
+      "jeddah": "جدة",
+      "dammam": "الدمام",
+      "khobar": "الخبر"
+    },
+    "types": {
+      "apartment": "شقة",
+      "villa": "فيلا",
+      "townhouse": "تاون هاوس",
+      "studio": "ستوديو"
+    },
+    "bedroomOptions": {
+      "studio": "ستوديو",
+      "one": "غرفة واحدة",
+      "two": "غرفتان",
+      "three": "٣ غرف",
+      "four": "٤ غرف",
+      "five": "٥ غرف فأكثر"
+    },
+    "furnishing": {
+      "standard": "قياسي",
+      "premium": "بريميوم"
+    },
+    "result": {
+      "estimatedAnnualRevenue": "الإيراد السنوي التقديري",
+      "occupancyRate": "متوسط الإشغال",
+      "nightlyRate": "متوسط السعر الليلي",
+      "rangeLabel": "النطاق",
+      "low": "الحد الأدنى",
+      "high": "الحد الأقصى",
+      "disclaimer": "تقدير مبني على بيانات السوق. الأداء الفعلي يتغير بحسب الموسم واستراتيجية التسعير وجودة الإعلان.",
+      "mockNotice": "وضع تجريبي — أدخل مفتاح Airbtics API للحصول على بيانات حية.",
+      "scheduleCta": "احجز استشارة"
+    },
+    "error": "تعذّر إنشاء التقدير. حاول مرة أخرى من فضلك."
+  },
   "contact": {
     "title": "تواصل معنا",
     "subtitle": "احجز استشارة لمناقشة عقارك",
     "scheduleBtn": "احجز موعداً",
     "contactBtn": "تواصل معنا",
-    "email": "hello@rentroyz.com",
-    "phone": "+1 (234) 567-890"
+    "email": "info@rentroyz.com",
+    "phone": "+966 55 650 0470"
   },
   "footer": {
     "copyright": "© رنت رويز، جميع الحقوق محفوظة."
