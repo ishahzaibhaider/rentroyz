@@ -183,7 +183,7 @@
       "low": "Low",
       "high": "High",
       "disclaimer": "Market-based estimate. Actual performance varies by season, pricing strategy, and listing quality.",
-      "mockNotice": "Demo mode — connect Airbtics API key for live data.",
+      "mockNotice": "Indicative estimate based on general market data.",
       "scheduleCta": "Schedule a consultation"
     },
     "error": "Couldn't generate an estimate. Please try again."
