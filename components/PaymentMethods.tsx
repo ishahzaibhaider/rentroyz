@@ -31,7 +31,7 @@ export default function PaymentMethods({
           <div
             aria-label={name}
             title={name}
-            className="flex h-9 w-14 items-center justify-center rounded-md bg-white px-1.5 py-1 shadow-[0_1px_2px_rgba(0,0,0,0.18)] ring-1 ring-black/5"
+            className="flex h-9 w-14 items-center justify-center overflow-hidden rounded-md bg-white px-1.5 py-1 shadow-[0_1px_2px_rgba(0,0,0,0.18)] ring-1 ring-black/5"
           >
             <Icon className="h-full w-full" />
           </div>
@@ -102,35 +102,20 @@ function AmexIcon({ className }: IconProps) {
   );
 }
 
-// Mada is the Saudi national payment scheme — green/blue brand colors with
-// "mada" Latin + "مدى" Arabic wordmark.
+// Mada is the Saudi national payment scheme. Uses the official brand logo
+// from public/payments/mada.png. The source PNG has heavy white padding
+// baked in, so `object-contain` alone renders the wordmark too small to
+// read. We scale the image up ~2.4x — the chip's `overflow-hidden` clips
+// the (white) padding that spills past the edges, leaving the logo filling
+// the chip. Chip size is unchanged.
 function MadaIcon({ className }: IconProps) {
   return (
-    <svg viewBox="0 0 56 22" className={className} aria-hidden>
-      <text
-        x="28"
-        y="10"
-        fill="#84BE41"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontSize="9"
-        fontWeight="800"
-        textAnchor="middle"
-        letterSpacing="-0.3"
-      >
-        mada
-      </text>
-      <text
-        x="28"
-        y="18.5"
-        fill="#252464"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontSize="5.5"
-        fontWeight="700"
-        textAnchor="middle"
-      >
-        مدى
-      </text>
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/payments/mada.png"
+      alt=""
+      className={clsx("scale-[2.4] object-contain", className)}
+    />
   );
 }
 
