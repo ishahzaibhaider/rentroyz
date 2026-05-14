@@ -50,6 +50,10 @@ const PROPERTY_TYPE_MOCK_MULT: Record<string, number> = {
 
 type EstimateInput = {
   city: string;
+  // District is collected by the form and sent in the request body, but the
+  // Airbtics API resolves figures at the city/market level — there is no
+  // district filter — so it does not (yet) affect the estimate.
+  district?: string;
   propertyType: string;
   bedrooms: number;
   furnishing: string;

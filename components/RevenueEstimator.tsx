@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { calm } from "@/lib/motion";
+import { DISTRICTS } from "@/lib/districts";
+import SearchableSelect from "@/components/ui/SearchableSelect";
 
 const CITIES = ["riyadh", "jeddah", "dammam", "khobar"] as const;
 const PROPERTY_TYPES = ["apartment", "villa", "townhouse", "studio"] as const;
@@ -35,6 +37,8 @@ export default function RevenueEstimator() {
   const numberLocale = locale === "ar" ? "ar-SA" : "en-US";
 
   const [city, setCity] = useState<(typeof CITIES)[number]>("riyadh");
+  // District depends on the selected city; empty means "not specified".
+  const [district, setDistrict] = useState<string>("");
   const [propertyType, setPropertyType] =
     useState<(typeof PROPERTY_TYPES)[number]>("apartment");
   const [bedrooms, setBedrooms] = useState<number>(2);
@@ -53,7 +57,13 @@ export default function RevenueEstimator() {
       const res = await fetch("/api/estimate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ city, propertyType, bedrooms, furnishing }),
+        body: JSON.stringify({
+          city,
+          district,
+          propertyType,
+          bedrooms,
+          furnishing,
+        }),
       });
       if (!res.ok) throw new Error("estimate failed");
       const data: Estimate = await res.json();
@@ -107,8 +117,26 @@ export default function RevenueEstimator() {
             <Field label={t("cityLabel")}>
               <Select
                 value={city}
-                onChange={(v) => setCity(v as typeof city)}
+                onChange={(v) => {
+                  setCity(v as typeof city);
+                  // Districts are city-specific — clear the stale selection.
+                  setDistrict("");
+                }}
                 options={CITIES.map((c) => ({ value: c, label: t(`cities.${c}`) }))}
+              />
+            </Field>
+
+            <Field label={t("districtLabel")}>
+              <SearchableSelect
+                value={district}
+                onChange={setDistrict}
+                options={(DISTRICTS[city] ?? []).map((d) => ({
+                  value: d.value,
+                  label: locale === "ar" ? d.ar : d.en,
+                }))}
+                placeholder={t("districtPlaceholder")}
+                searchPlaceholder={t("districtSearch")}
+                noResultsText={t("districtNoResults")}
               />
             </Field>
 
@@ -134,7 +162,7 @@ export default function RevenueEstimator() {
               />
             </Field>
 
-            <Field label={t("furnishingLabel")}>
+            <Field label={t("furnishingLabel")} className="sm:col-span-2">
               <div className="flex gap-2">
                 {FURNISHING.map((f) => (
                   <button
@@ -242,12 +270,14 @@ export default function RevenueEstimator() {
 function Field({
   label,
   children,
+  className,
 }: {
   label: string;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <label className="flex flex-col gap-2">
+    <label className={`flex flex-col gap-2 ${className ?? ""}`}>
       <span className="text-xs font-medium uppercase tracking-wider text-ink-deep/55">
         {label}
       </span>
