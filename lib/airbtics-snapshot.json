@@ -1,0 +1,329 @@
+{
+  "harvestedAt": "2026-05-14T11:49:50.098Z",
+  "note": "Static Airbtics snapshot. /api/estimate serves from this — no live API calls. Re-run scripts/harvest-airbtics.mjs to refresh.",
+  "markets": {
+    "riyadh": 191171,
+    "jeddah": 191170,
+    "dammam": 314062
+  },
+  "summaries": {
+    "riyadh": {
+      "1": {
+        "occupancy": 36,
+        "average_daily_rate": 71,
+        "revenue": 9437,
+        "occupancy_percentiles": {
+          "p25": 24,
+          "p50": 36,
+          "p75": 50,
+          "p90": 65
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 59,
+          "p50": 71,
+          "p75": 92,
+          "p90": 120
+        },
+        "revenue_percentiles": {
+          "p25": 5217,
+          "p50": 9437,
+          "p75": 17037,
+          "p90": 29037
+        },
+        "active_listings_count": 7398,
+        "market_grade": "D+",
+        "regulations": "strict"
+      },
+      "2": {
+        "occupancy": 45,
+        "average_daily_rate": 143,
+        "revenue": 23866,
+        "occupancy_percentiles": {
+          "p25": 32,
+          "p50": 45,
+          "p75": 60,
+          "p90": 72
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 107,
+          "p50": 143,
+          "p75": 192,
+          "p90": 246
+        },
+        "revenue_percentiles": {
+          "p25": 12582,
+          "p50": 23866,
+          "p75": 42928,
+          "p90": 67349
+        },
+        "active_listings_count": 1341,
+        "market_grade": "D+",
+        "regulations": "strict"
+      },
+      "3": {
+        "occupancy": 48,
+        "average_daily_rate": 199,
+        "revenue": 36125,
+        "occupancy_percentiles": {
+          "p25": 36,
+          "p50": 48,
+          "p75": 59,
+          "p90": 70
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 162,
+          "p50": 199,
+          "p75": 236,
+          "p90": 277
+        },
+        "revenue_percentiles": {
+          "p25": 21543,
+          "p50": 36125,
+          "p75": 52893,
+          "p90": 73383
+        },
+        "active_listings_count": 974,
+        "market_grade": "D+",
+        "regulations": "strict"
+      },
+      "4": {
+        "occupancy": 53,
+        "average_daily_rate": 198,
+        "revenue": 39055,
+        "occupancy_percentiles": {
+          "p25": 46,
+          "p50": 53,
+          "p75": 65,
+          "p90": 72
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 168,
+          "p50": 198,
+          "p75": 234,
+          "p90": 312
+        },
+        "revenue_percentiles": {
+          "p25": 28603,
+          "p50": 39055,
+          "p75": 56716,
+          "p90": 84040
+        },
+        "active_listings_count": 67,
+        "market_grade": "D+",
+        "regulations": "strict"
+      }
+    },
+    "jeddah": {
+      "1": {
+        "occupancy": 33,
+        "average_daily_rate": 64,
+        "revenue": 7878,
+        "occupancy_percentiles": {
+          "p25": 23,
+          "p50": 33,
+          "p75": 47,
+          "p90": 60
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 54,
+          "p50": 64,
+          "p75": 79,
+          "p90": 103
+        },
+        "revenue_percentiles": {
+          "p25": 4597,
+          "p50": 7878,
+          "p75": 13993,
+          "p90": 23481
+        },
+        "active_listings_count": 2385,
+        "market_grade": "E+",
+        "regulations": "strict"
+      },
+      "2": {
+        "occupancy": 47,
+        "average_daily_rate": 100,
+        "revenue": 17560,
+        "occupancy_percentiles": {
+          "p25": 35,
+          "p50": 47,
+          "p75": 59,
+          "p90": 70
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 82,
+          "p50": 100,
+          "p75": 131,
+          "p90": 188
+        },
+        "revenue_percentiles": {
+          "p25": 10592,
+          "p50": 17560,
+          "p75": 28993,
+          "p90": 50074
+        },
+        "active_listings_count": 773,
+        "market_grade": "E+",
+        "regulations": "strict"
+      },
+      "3": {
+        "occupancy": 49,
+        "average_daily_rate": 145,
+        "revenue": 26339,
+        "occupancy_percentiles": {
+          "p25": 37,
+          "p50": 49,
+          "p75": 61,
+          "p90": 70
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 112,
+          "p50": 145,
+          "p75": 180,
+          "p90": 273
+        },
+        "revenue_percentiles": {
+          "p25": 15279,
+          "p50": 26339,
+          "p75": 40917,
+          "p90": 71712
+        },
+        "active_listings_count": 251,
+        "market_grade": "E+",
+        "regulations": "strict"
+      },
+      "4": {
+        "occupancy": 45,
+        "average_daily_rate": 275,
+        "revenue": 45745,
+        "occupancy_percentiles": {
+          "p25": 40,
+          "p50": 45,
+          "p75": 57,
+          "p90": 63
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 157,
+          "p50": 275,
+          "p75": 372,
+          "p90": 480
+        },
+        "revenue_percentiles": {
+          "p25": 23210,
+          "p50": 45745,
+          "p75": 78131,
+          "p90": 112252
+        },
+        "active_listings_count": 33,
+        "market_grade": "E+",
+        "regulations": "strict"
+      }
+    },
+    "dammam": {
+      "1": {
+        "occupancy": 31,
+        "average_daily_rate": 64,
+        "revenue": 7411,
+        "occupancy_percentiles": {
+          "p25": 21,
+          "p50": 31,
+          "p75": 44,
+          "p90": 60
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 52,
+          "p50": 64,
+          "p75": 80,
+          "p90": 96
+        },
+        "revenue_percentiles": {
+          "p25": 4042,
+          "p50": 7411,
+          "p75": 13168,
+          "p90": 21942
+        },
+        "active_listings_count": 1110,
+        "market_grade": "D+",
+        "regulations": "strict"
+      },
+      "2": {
+        "occupancy": 38,
+        "average_daily_rate": 106,
+        "revenue": 14912,
+        "occupancy_percentiles": {
+          "p25": 28,
+          "p50": 38,
+          "p75": 52,
+          "p90": 65
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 88,
+          "p50": 106,
+          "p75": 128,
+          "p90": 164
+        },
+        "revenue_percentiles": {
+          "p25": 9090,
+          "p50": 14912,
+          "p75": 24754,
+          "p90": 39692
+        },
+        "active_listings_count": 343,
+        "market_grade": "D+",
+        "regulations": "strict"
+      },
+      "3": {
+        "occupancy": 40,
+        "average_daily_rate": 141,
+        "revenue": 20810,
+        "occupancy_percentiles": {
+          "p25": 32,
+          "p50": 40,
+          "p75": 50,
+          "p90": 59
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 119,
+          "p50": 141,
+          "p75": 184,
+          "p90": 226
+        },
+        "revenue_percentiles": {
+          "p25": 14019,
+          "p50": 20810,
+          "p75": 33958,
+          "p90": 49201
+        },
+        "active_listings_count": 150,
+        "market_grade": "D+",
+        "regulations": "strict"
+      },
+      "4": {
+        "occupancy": 48,
+        "average_daily_rate": 214,
+        "revenue": 37493,
+        "occupancy_percentiles": {
+          "p25": 38,
+          "p50": 48,
+          "p75": 56,
+          "p90": 63
+        },
+        "average_daily_rate_percentiles": {
+          "p25": 188,
+          "p50": 214,
+          "p75": 242,
+          "p90": 377
+        },
+        "revenue_percentiles": {
+          "p25": 26076,
+          "p50": 37493,
+          "p75": 49465,
+          "p90": 86691
+        },
+        "active_listings_count": 16,
+        "market_grade": "D+",
+        "regulations": "strict"
+      }
+    }
+  }
+}

@@ -1,7 +1,8 @@
 // ONE-TIME harvest: pulls every city × bedrooms summary from Airbtics and
 // writes them to lib/airbtics-snapshot.json. After this runs, /api/estimate
 // serves from that snapshot and never calls Airbtics again — so the API cost
-// is a deliberate one-off (~$6.50), not a per-visitor leak.
+// is a deliberate one-off (~$4.25: 16 summaries + a Khobar search), not a
+// per-visitor leak.
 //
 // Airbtics bills ~$0.25 per call. Budget cap: $8. This script HARD-STOPS at
 // MAX_CALLS so it physically cannot overspend, even if something loops.
@@ -16,7 +17,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 // ── Budget guard ───────────────────────────────────────────────────────────
 const COST_PER_CALL = 0.25;
-const MAX_CALLS = 30; // hard stop at $7.50 — leaves headroom under the $8 cap
+const MAX_CALLS = 24; // hard stop at $6.00 — real need is ~17-20; well under $8
 let callCount = 0;
 
 function guardedFetch(url, init) {
@@ -64,7 +65,7 @@ const KNOWN_MARKET_IDS = {
 };
 const KHOBAR_QUERIES = ["Al Khobar", "Al-Khobar", "Khobar", "Al-Khubar"];
 const CITIES = ["riyadh", "jeddah", "dammam", "khobar"];
-const BEDROOMS = [0, 1, 2, 3, 4, 5];
+const BEDROOMS = [1, 2, 3, 4];
 const DELAY_MS = 800;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 

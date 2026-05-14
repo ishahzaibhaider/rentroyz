@@ -38,7 +38,7 @@ const CITY_QUERIES = {
   khobar: ["Al Khobar", "Al-Khobar", "Khobar", "Al-Khubar"],
 };
 
-const BEDROOMS = [0, 1, 2, 3, 4, 5];
+const BEDROOMS = [1, 2, 3, 4];
 
 // Space requests out — if the 403s are rate limiting rather than plan limits,
 // a delay between calls will make the "forbidden" markets start succeeding.

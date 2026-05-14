@@ -9,13 +9,14 @@ import SearchableSelect from "@/components/ui/SearchableSelect";
 
 const CITIES = ["riyadh", "jeddah", "dammam", "khobar"] as const;
 const PROPERTY_TYPES = ["apartment", "villa", "townhouse", "studio"] as const;
+// 1-4 bedrooms only. Studio was removed (it overlapped with the "Studio"
+// property type) and 5+ was removed at the client's request — together that
+// keeps the Airbtics query universe to 4 cities × 4 bedroom buckets.
 const BEDROOMS = [
-  { value: 0, key: "studio" },
   { value: 1, key: "one" },
   { value: 2, key: "two" },
   { value: 3, key: "three" },
   { value: 4, key: "four" },
-  { value: 5, key: "five" },
 ] as const;
 const FURNISHING = ["standard", "premium"] as const;
 

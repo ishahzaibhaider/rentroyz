@@ -3,15 +3,23 @@ import { NextResponse } from "next/server";
 const AIRBTICS_BASE =
   "https://crap0y5bx5.execute-api.us-east-2.amazonaws.com/prod";
 
-// Each of our four city slugs maps to one or more query strings to try
-// against /markets/search?query=...&country_code=SA. Saudi cities sometimes
-// have multiple name variants (e.g., "Dammam" / "Ad-Dammam") and Airbtics
-// stores them under specific spellings — we try each in turn until one hits.
+// Each city slug maps to one or more query strings to try against
+// /markets/search?query=...&country_code=SA. Saudi cities sometimes have
+// multiple name variants (e.g., "Dammam" / "Ad-Dammam") and Airbtics stores
+// them under specific spellings — we try each in turn until one hits.
 const CITY_QUERIES: Record<string, string[]> = {
   riyadh: ["Riyadh", "Ar-Riyadh", "Al-Riyadh"],
   jeddah: ["Jeddah", "Jiddah", "Jedda"],
   dammam: ["Dammam", "Ad-Dammam", "Ad Dammam", "Eastern Province"],
-  khobar: ["Al Khobar", "Al-Khobar", "Khobar", "Al-Khubar"],
+};
+
+// Airbtics has no Al Khobar market — confirmed via the search API, which
+// returns an empty list for every Khobar spelling. Al Khobar is part of the
+// Dammam–Dhahran–Khobar metropolitan area (one continuous short-stay rental
+// market), so Khobar requests resolve to — and share the cache with —
+// Dammam's market.
+const CITY_MARKET_ALIAS: Record<string, string> = {
+  khobar: "dammam",
 };
 
 // Airbtics returns revenue/ADR in USD. We display in SAR (pegged ~3.75 SAR/USD).
@@ -93,10 +101,14 @@ async function findMarketId(
   city: string,
   apiKey: string
 ): Promise<number | null> {
-  const cached = marketCache.get(city);
+  // Resolve any city alias first (e.g. khobar → dammam) so the cache key,
+  // the query list, and the lookup all use the market we actually hit.
+  const resolved = CITY_MARKET_ALIAS[city] ?? city;
+
+  const cached = marketCache.get(resolved);
   if (cached) return cached;
 
-  const queries = CITY_QUERIES[city] ?? [city];
+  const queries = CITY_QUERIES[resolved] ?? [resolved];
 
   for (const query of queries) {
     const list = await searchOnce(query, apiKey);
@@ -123,7 +135,7 @@ async function findMarketId(
 
     console.log(
       "[estimate] resolved",
-      city,
+      resolved,
       "via query",
       JSON.stringify(query),
       "→ market_id:",
@@ -132,11 +144,16 @@ async function findMarketId(
       best.name,
       ")"
     );
-    marketCache.set(city, id);
+    marketCache.set(resolved, id);
     return id;
   }
 
-  console.error("[estimate] no market found for", city, "after trying:", queries);
+  console.error(
+    "[estimate] no market found for",
+    resolved,
+    "after trying:",
+    queries
+  );
   return null;
 }
 
