@@ -108,7 +108,14 @@ export default function SearchableSelect({
               className="w-full rounded-xl bg-sand-soft/60 px-3 py-2 text-sm text-ink-deep placeholder:text-ink-deep/40 focus:outline-none"
             />
           </div>
-          <ul role="listbox" className="max-h-56 overflow-y-auto py-1">
+          {/* `data-lenis-prevent` stops the Lenis smooth-scroll from hijacking
+              wheel/touch events here, so this list scrolls on its own instead
+              of scrolling the page behind it. */}
+          <ul
+            role="listbox"
+            data-lenis-prevent
+            className="max-h-56 overflow-y-auto overscroll-contain py-1"
+          >
             {filtered.length === 0 ? (
               <li className="px-4 py-3 text-sm text-ink-deep/40">
                 {noResultsText}
