@@ -1,16 +1,14 @@
 import type { Locale } from "./i18n/request";
 
-// Legal content for the Privacy Policy and Terms & Conditions pages.
+// Legal content for the Privacy Policy, Terms & Conditions, and Payment &
+// Refund Policy pages.
 //
-// Privacy Policy: client-provided. The text in `privacyEn` / `privacyAr` was
-// supplied verbatim by the client (Rent Royz) and should not be edited
-// without their sign-off. It carries no template disclaimer.
-//
-// Terms & Conditions: drafted in-house against the public legal framework of
-// the Kingdom of Saudi Arabia (PDPL, E-Commerce Law, Anti-Cyber Crime Law,
-// Tourism Law, VAT Law). It still carries the `disclaimer` notice — a
-// licensed Saudi legal practitioner should review it before it is relied on,
-// and it should be replaced if the client supplies their own Terms text.
+// All three documents are client-provided. The Arabic text was supplied
+// verbatim by the client (Rent Royz) on 14/05/2026 and must not be edited
+// without their sign-off. The client sent Privacy in both languages; Terms
+// and the Payment & Refund Policy were sent in Arabic only, so the English
+// versions here are faithful translations — they carry a short translation
+// note pointing to the Arabic original as the authoritative text.
 
 export type LegalSection = {
   heading: string;
@@ -27,8 +25,8 @@ export type LegalDoc = {
   lastUpdated: string;
   intro: string[];
   sections: LegalSection[];
-  /** Optional template disclaimer — present on the in-house Terms draft,
-      omitted from the client-provided Privacy Policy. */
+  /** Optional notice shown in a callout box above the content. Used here for
+      the translation note on the English Terms / Payment documents. */
   disclaimerLabel?: string;
   disclaimer?: string;
 };
@@ -50,14 +48,11 @@ export const COMPANY = {
   phone: "+966 55 650 0470",
 } as const;
 
-const SHARED_DISCLAIMER_LABEL = {
-  en: "Important notice",
-  ar: "تنويه مهم",
-};
-
-const SHARED_DISCLAIMER = {
-  en: "This document is provided for general information. It was prepared against the publicly available legal framework of the Kingdom of Saudi Arabia and reflects standard practice; it does not constitute legal advice. Rent Royz recommends that it be reviewed by a licensed Saudi legal practitioner before it is relied upon.",
-  ar: "هذا المستند مُقدَّم لأغراض المعلومات العامة. وقد أُعِدَّ استناداً إلى الإطار النظامي المتاح للعموم في المملكة العربية السعودية ووفق الممارسات المعتادة، ولا يُعدّ استشارة قانونية. توصي رنت رويز بمراجعته من قِبل ممارس قانوني سعودي مرخّص قبل الاعتماد عليه.",
+// Shown on the English Terms / Payment documents, which are translations of
+// the Arabic originals the client supplied.
+const TRANSLATION_NOTE = {
+  label: "Translation note",
+  text: "This English text is a translation provided for convenience. The Arabic version of this document is the authoritative text and prevails in the event of any discrepancy.",
 };
 
 // ── English ────────────────────────────────────────────────────────────────
@@ -194,171 +189,194 @@ const privacyEn: LegalDoc = {
   ],
 };
 
+// English translation of the client's Arabic Terms & Conditions (supplied
+// 14/05/2026). The Arabic version (`termsAr`) is authoritative.
 const termsEn: LegalDoc = {
   title: "Terms & Conditions",
   tagline:
-    "The terms governing your use of the Rent Royz website and services.",
+    "The terms governing bookings and use of the RentRoyz website and services.",
   lastUpdatedLabel: "Last Updated",
   lastUpdated: "14/05/2026",
-  intro: [
-    "These Terms and Conditions (the “Terms”) govern your access to and use of the website rentroyz.com and the property management services provided by Rent Royz in the Kingdom of Saudi Arabia.",
-    "By accessing the website or engaging our services, you agree to be bound by these Terms. If you do not agree with them, please do not use the website or our services.",
-  ],
+  intro: [],
   sections: [
     {
-      heading: "Definitions",
-      items: [
-        "“Rent Royz”, “we”, “us”, or “our” — the business identified in the contact section below.",
-        "“Owner” — a person who owns a property and engages Rent Royz to manage it.",
-        "“Guest” — a person who books or stays at a managed property.",
-        "“Property” — an apartment or unit managed by Rent Royz on behalf of an Owner.",
-        "“Services” — the furnishing, listing, and end-to-end management services provided by Rent Royz.",
-        "“Booking Platforms” — third-party platforms such as Airbnb and Booking.com on which Properties may be listed.",
-        "“Management Agreement” — the separate written property management agreement signed between Rent Royz and an Owner.",
-      ],
-    },
-    {
-      heading: "About Rent Royz and our services",
+      heading: "Acceptance of the Terms",
       body: [
-        "Rent Royz is a professional property operations company focused on short-term and mid-term rentals. Our model is to take properties from their owners, furnish and prepare them to a hospitality standard, list them on Booking Platforms and our own channels, and manage the complete guest operation — including guest communication, check-in and check-out, cleaning, maintenance, pricing, and revenue optimisation.",
-        "The Owner retains ownership of the Property. Rent Royz operates it, and revenue is shared between the Owner and Rent Royz transparently in accordance with the Management Agreement.",
-        "Information presented on the website — including any revenue estimate — is indicative only, is based on market data and assumptions, and does not constitute a guarantee of income or performance.",
+        "By using the RentRoyz website or completing any booking or payment through it, the customer acknowledges that they have read, understood, and agreed to these Terms & Conditions, including the payment, cancellation, and refund policy.",
       ],
     },
     {
-      heading: "Eligibility",
+      heading: "Nature of the Service",
       body: [
-        "To engage our services you must be at least 18 years old and have the legal capacity to enter into a binding agreement. An Owner must have the lawful right to make the Property available for short-term rental and to authorise Rent Royz to manage it.",
+        "RentRoyz provides services relating to daily bookings and the management and operation of residential, tourism, or similar real-estate units. The service may be provided directly by RentRoyz or through partners, owners, operators, or external booking platforms.",
       ],
     },
     {
-      heading: "Regulatory compliance and licensing",
+      heading: "Accuracy of Information",
       body: [
-        "Rent Royz carries on its business in accordance with the applicable laws of the Kingdom of Saudi Arabia, including:",
-      ],
-      items: [
-        "the Tourism Law, issued by Royal Decree No. M/51, and the regulations governing the licensing of hospitality and furnished-accommodation facilities issued by the Ministry of Tourism, including the requirements applicable to short-term rental;",
-        "the E-Commerce Law, issued by Royal Decree No. M/126 dated 7/11/1440H, and its Implementing Regulations;",
-        "the Anti-Cyber Crime Law, issued by Royal Decree No. M/17 dated 8/3/1428H;",
-        "the Personal Data Protection Law, issued by Royal Decree No. M/19 dated 9/2/1443H (as amended), and its Implementing Regulations; and",
-        "the Value Added Tax Law and its Implementing Regulations, as administered by the Zakat, Tax and Customs Authority (ZATCA).",
+        "The customer undertakes to provide correct and up-to-date information when booking, including name, mobile number, email address, number of guests, and check-in and check-out dates.",
+        "RentRoyz reserves the right to cancel the booking or refuse entry if any incorrect or misleading information is found.",
       ],
     },
     {
-      heading: "Owner responsibility for permits",
+      heading: "Booking Confirmation",
       body: [
-        "The Owner is responsible for ensuring that the Property may lawfully be used for short-term rental, including any requirements relating to title, mortgage, owners'-association or building rules, and municipal or homeowners'-association approvals. Where a short-term rental permit or registration is required, Rent Royz will assist the Owner in obtaining it, but the underlying eligibility of the Property remains the Owner's responsibility.",
+        "A booking is not considered confirmed until the required payment has been received and an official confirmation has been issued by RentRoyz or by the platform through which the booking was made.",
+        "Some bookings may be subject to identity verification or the completion of additional requirements before check-in.",
       ],
     },
     {
-      heading: "The Management Agreement",
+      heading: "Check-in and Check-out",
       body: [
-        "These Terms apply to your use of the website and to the general relationship between us. For Owners, they are supplemented by a separate written Management Agreement that sets out the commercial terms — including fees, revenue share, payout schedule, and term. In the event of any conflict between these Terms and the Management Agreement on a commercial matter, the Management Agreement prevails.",
+        "The customer must comply with the check-in and check-out times stated in the booking.",
+        "Any delay in checking out without prior approval may result in additional charges or in the customer bearing any losses resulting from the delay.",
       ],
     },
     {
-      heading: "Owner obligations",
-      items: [
-        "Provide accurate, complete, and up-to-date information about yourself and the Property.",
-        "Ensure you hold lawful title to, or authority over, the Property and the right to let it.",
-        "Deliver the Property in a condition suitable for furnishing and guest occupation, and disclose any known defects.",
-        "Maintain appropriate property insurance, unless otherwise agreed in the Management Agreement.",
-        "Cooperate reasonably with Rent Royz to enable the Services to be delivered.",
-      ],
-    },
-    {
-      heading: "Rent Royz obligations",
-      items: [
-        "Furnish and prepare the Property to a hospitality standard, as agreed with the Owner.",
-        "List the Property on Booking Platforms and our own channels and manage reservations.",
-        "Manage the guest operation, including communication, check-in and check-out, cleaning, and maintenance.",
-        "Optimise pricing and occupancy and account for revenue transparently.",
-        "Provide the Owner with reporting and payouts in accordance with the Management Agreement.",
-      ],
-    },
-    {
-      heading: "Fees, revenue sharing, and payouts",
+      heading: "Use of the Unit",
       body: [
-        "Fees, the revenue-share split, and the payout schedule are set out in the Management Agreement. Value Added Tax (VAT) is applied where required by law. Rent Royz issues tax invoices in accordance with ZATCA requirements. Payouts are made to the bank account designated by the Owner.",
+        "The customer undertakes to use the unit in a lawful, safe, and careful manner, and not to use it for any purpose that violates the law, public morals, or the booking terms.",
+        "The customer also undertakes not to disturb the neighbours, hold unauthorised gatherings, exceed the permitted number of guests, or cause any damage to the unit or its contents.",
       ],
     },
     {
-      heading: "Bookings and guests",
+      heading: "Damages and Liability",
       body: [
-        "Reservations are accepted subject to the house rules of the Property and the terms of the relevant Booking Platform. Cancellations, refunds, and guest disputes are handled in accordance with the policies of the Booking Platform through which the reservation was made and the Management Agreement. Guests are expected to comply with the house rules, applicable law, and the requirements of the relevant authorities.",
+        "The customer is responsible for any damage or loss occurring to the unit or its contents during their stay, where it results from misuse, negligence, or breach of the terms.",
+        "RentRoyz is entitled to claim appropriate compensation from the customer for the resulting damages or costs.",
       ],
     },
     {
-      heading: "Intellectual property",
+      heading: "Cleanliness and Maintenance",
       body: [
-        "The website and its content — including text, graphics, logos, the Rent Royz name and brand, photography, and software — are owned by Rent Royz or its licensors and are protected by law. You may not copy, reproduce, distribute, or create derivative works from any part of the website without our prior written consent.",
+        "RentRoyz or the operating party undertakes to deliver the unit in a condition suitable for use, and the customer must keep the unit and its contents clean throughout the stay.",
+        "If there are any observations regarding cleanliness or maintenance, RentRoyz must be notified immediately upon check-in or within a reasonable period of discovering the issue.",
       ],
     },
     {
-      heading: "Acceptable use of the website",
+      heading: "Photographs and Specifications",
       body: [
-        "You agree to use the website only for lawful purposes. You must not use the website in any way that breaches applicable law — including the Anti-Cyber Crime Law — attempt to gain unauthorised access to our systems, introduce malicious code, or interfere with the proper operation of the website.",
+        "RentRoyz makes every effort to display accurate photographs and information about the units. Nevertheless, there may be minor differences in furniture, décor, or arrangement due to operational updates or the nature of the unit.",
+        "Minor differences are not grounds for a refund unless there is a material difference that affects the use of the unit or contradicts what was confirmed to the customer.",
       ],
     },
     {
-      heading: "Third-party platforms and links",
+      heading: "External Platforms",
       body: [
-        "The website and Services rely on third-party platforms — including Booking Platforms and scheduling tools — and may contain links to third-party websites. Those platforms and websites are governed by their own terms and privacy policies. Rent Royz is not responsible for the content, policies, or practices of third parties.",
+        "If a booking is made through an external platform, the customer agrees to comply with the terms and conditions of that platform, including its payment, cancellation, and refund policy.",
+        "In the event of any conflict between RentRoyz's policy and the platform's policy, the platform's policy applies to the booking made through it, unless the applicable laws provide otherwise.",
       ],
     },
     {
-      heading: "Disclaimers and limitation of liability",
+      heading: "Emergencies and Force Majeure",
       body: [
-        "The website and its content are provided on an “as is” and “as available” basis. Revenue estimates and other figures shown on the website are indicative and are not a guarantee of results. To the maximum extent permitted by the laws of the Kingdom of Saudi Arabia, Rent Royz shall not be liable for any indirect or consequential loss, or for loss of profit or revenue, arising from the use of the website. Nothing in these Terms excludes or limits liability that cannot lawfully be excluded or limited.",
+        "RentRoyz is not liable for any delay, cancellation, or inability to provide the service resulting from circumstances beyond its control, such as natural disasters, interruption of public utilities, government decisions, emergency incidents, or any force majeure event.",
+        "In such cases, RentRoyz will work to find a suitable solution as far as possible.",
       ],
     },
     {
-      heading: "Indemnity",
+      heading: "Privacy and Data",
       body: [
-        "You agree to indemnify Rent Royz against any claims, losses, or costs arising from your breach of these Terms, your breach of applicable law, or — in the case of an Owner — any inaccurate information or any lack of lawful right in relation to the Property.",
+        "RentRoyz handles customer data in accordance with the Privacy Policy published on the website, and in compliance with the applicable laws of the Kingdom of Saudi Arabia.",
+        "By using the website, the customer consents to the collection and processing of the data necessary to complete the booking, communication, payment, verification, and customer service.",
       ],
     },
     {
-      heading: "Force majeure",
+      heading: "Complaints and Communication",
       body: [
-        "Rent Royz is not liable for any failure or delay in performing its obligations that results from events beyond its reasonable control, including natural events, government action, regulatory change, or interruptions to third-party platforms or utilities.",
+        "If there is any complaint or observation, the customer may contact RentRoyz through the official communication channels shown on the website.",
+        "RentRoyz undertakes to review complaints seriously and to work on resolving them within a reasonable period according to the nature of the case.",
       ],
     },
     {
-      heading: "Term and termination",
+      heading: "Amendment of the Terms",
       body: [
-        "Your right to use the website continues while these Terms are in effect. The term and termination of the management relationship for Owners are governed by the Management Agreement. We may suspend or restrict access to the website where necessary to protect the website, our users, or our lawful interests.",
+        "RentRoyz reserves the right to amend these Terms & Conditions or the Payment & Refund Policy from time to time, and the version published on the website at the time of booking or at the time of using the service shall apply.",
       ],
     },
     {
-      heading: "Amendments to these Terms",
+      heading: "Governing Law",
       body: [
-        "We may update these Terms from time to time. The current version, with its “Last Updated” date, will always be available on this page. Your continued use of the website after a change takes effect constitutes acceptance of the updated Terms.",
-      ],
-    },
-    {
-      heading: "Governing law and dispute resolution",
-      body: [
-        "These Terms, and any dispute or claim arising out of or in connection with them or with your use of the website or Services, are governed by the laws of the Kingdom of Saudi Arabia. The competent courts of the Kingdom of Saudi Arabia have exclusive jurisdiction to settle any such dispute.",
-      ],
-    },
-    {
-      heading: "Contact us",
-      body: [
-        "If you have any question about these Terms, please contact us:",
-      ],
-      items: [
-        `Company name: ${COMPANY.legalName.en}`,
-        `Commercial Registration (CR) No.: ${COMPANY.cr}`,
-        `VAT Registration No.: ${COMPANY.vat}`,
-        `Address: ${COMPANY.address.en}`,
-        `Email: ${COMPANY.email}`,
-        `Phone: ${COMPANY.phone}`,
+        "These Terms & Conditions are governed by the applicable laws of the Kingdom of Saudi Arabia, and the competent authorities in the Kingdom shall be the point of reference in the event of any dispute that is not resolved amicably.",
       ],
     },
   ],
-  disclaimerLabel: SHARED_DISCLAIMER_LABEL.en,
-  disclaimer: SHARED_DISCLAIMER.en,
+  disclaimerLabel: TRANSLATION_NOTE.label,
+  disclaimer: TRANSLATION_NOTE.text,
+};
+
+// English translation of the client's Arabic Payment & Refund Policy
+// (supplied 14/05/2026). The Arabic version (`paymentAr`) is authoritative.
+const paymentEn: LegalDoc = {
+  title: "Payment & Refund Policy",
+  tagline: "How RentRoyz handles payments, cancellations, and refunds.",
+  lastUpdatedLabel: "Last Updated",
+  lastUpdated: "14/05/2026",
+  intro: [],
+  sections: [
+    {
+      heading: "Payment Policy",
+      body: [
+        "All payments for bookings or services provided through RentRoyz are made via the payment methods approved on the website or through the payment channels designated by the company.",
+        "The customer must pay the full required amount to confirm the booking or service. A booking is not considered confirmed until the payment has been received successfully and the booking confirmation has been issued by RentRoyz or by the platform through which the booking was made.",
+        "Depending on the nature of the booking, the amounts paid include the cost of the stay or service, operational fees, cleaning fees, taxes, and any additional fees that are explained to the customer before the payment is completed.",
+      ],
+    },
+    {
+      heading: "Non-Refundable Amounts",
+      body: [
+        "All amounts paid are considered non-refundable after the booking is confirmed, except in cases where a material defect in the unit is established that prevents the customer from benefiting from the booking as agreed.",
+        "This includes, but is not limited to: a material operational problem in the unit, the unit not being ready for occupancy, a material difference between the confirmed unit and the unit delivered to the customer, or a significant defect in essential services such as electricity, water, or air conditioning — where the defect existed before or at the time of check-in and was not resolved within a reasonable period.",
+        "The refund does not cover cases resulting from a change in the customer's wishes, a no-show, late arrival, early departure, a change of personal plans, or failure to read the booking details and policies before payment.",
+      ],
+    },
+    {
+      heading: "Refunds in the Event of a Defect in the Unit",
+      body: [
+        "If there is a defect in the unit, the customer must notify RentRoyz immediately through the approved communication channels, providing evidence of the issue such as photographs, video, or a clear description of the situation.",
+        "RentRoyz reviews and verifies the case, and one of the following actions may be taken at the company's discretion and according to the nature of the case: providing a suitable solution or urgent maintenance, moving the customer to a suitable available alternative unit, partial compensation, or a full or partial refund of the amount paid where it is established that the defect prevents benefit from the booking and no suitable alternative was provided.",
+        "Each case is assessed based on its circumstances, and a minor observation or an immaterial defect is not automatically grounds for a refund.",
+      ],
+    },
+    {
+      heading: "Bookings Made Through External Platforms",
+      body: [
+        "If the booking is made through an external platform such as Booking.com, Airbnb, or any other booking platform, the cancellation and refund policy is primarily subject to the policy of the platform through which the booking was made.",
+        "In this case, RentRoyz is not obliged to issue any direct refund outside the platform's mechanism, and the customer must submit the cancellation or refund request through the same platform on which the booking was completed.",
+        "RentRoyz may assist in reviewing the case or providing the platform with the necessary information, but the final decision regarding the refund or cancellation is made in accordance with the platform's policy and its approved booking terms.",
+      ],
+    },
+    {
+      heading: "Cancellation by the Customer",
+      body: [
+        "If the customer wishes to cancel the booking after it has been confirmed, the cancellation policy stated at the time of booking applies.",
+        "If the booking is classified as non-refundable, no amounts paid will be returned, except in cases where a material defect in the unit is established or the service cannot be provided for a reason attributable to RentRoyz.",
+      ],
+    },
+    {
+      heading: "Cancellation by RentRoyz",
+      body: [
+        "RentRoyz reserves the right to cancel or amend the booking in cases of necessity, such as emergency operational circumstances, the inability to prepare the unit, a defect that prevents its use, or any reason beyond its control.",
+        "In such cases, RentRoyz will work to provide a suitable alternative whenever possible, or refund the amount paid according to the case.",
+      ],
+    },
+    {
+      heading: "Additional Fees",
+      body: [
+        "Additional fees may be charged to the customer in the event of damage to the unit, loss of keys or access cards, breach of the usage terms, exceeding the permitted number of guests, smoking in a unit not designated for smoking, or late check-out without prior approval.",
+        "These fees are calculated based on the value of the damage, the actual cost, or the policy stated on the booking page.",
+      ],
+    },
+    {
+      heading: "Refund Processing Time",
+      body: [
+        "If a refund is approved, the amount is processed within a reasonable period depending on the payment method used, and the time for the amount to reach the customer's account may vary according to the bank or payment service provider.",
+        "If the booking was made through an external platform, the refund period and mechanism are subject to that platform's procedures.",
+      ],
+    },
+  ],
+  disclaimerLabel: TRANSLATION_NOTE.label,
+  disclaimer: TRANSLATION_NOTE.text,
 };
 
 // ── Arabic ─────────────────────────────────────────────────────────────────
@@ -495,177 +513,196 @@ const privacyAr: LegalDoc = {
   ],
 };
 
+// Client-provided text — supplied by Rent Royz on 14/05/2026, used verbatim.
 const termsAr: LegalDoc = {
   title: "الشروط والأحكام",
-  tagline: "الشروط التي تحكم استخدامك لموقع رنت رويز وخدماتها.",
+  tagline: "الشروط التي تحكم الحجوزات واستخدام موقع RentRoyz وخدماته.",
   lastUpdatedLabel: "آخر تحديث",
   lastUpdated: "14/05/2026",
-  intro: [
-    "تحكم هذه الشروط والأحكام («الشروط») وصولك إلى الموقع الإلكتروني rentroyz.com واستخدامك له، وخدمات إدارة العقارات التي تقدّمها رنت رويز في المملكة العربية السعودية.",
-    "بوصولك إلى الموقع أو استعانتك بخدماتنا، فإنك توافق على الالتزام بهذه الشروط. وإذا كنت لا توافق عليها، فيُرجى عدم استخدام الموقع أو خدماتنا.",
-  ],
+  intro: [],
   sections: [
     {
-      heading: "التعريفات",
-      items: [
-        "«رنت رويز» أو «نحن» — المنشأة المُحدّدة في قسم التواصل أدناه.",
-        "«المالك» — الشخص الذي يملك عقاراً ويستعين برنت رويز لإدارته.",
-        "«الضيف» — الشخص الذي يحجز أو يقيم في عقار مُدار.",
-        "«العقار» — شقة أو وحدة تديرها رنت رويز نيابةً عن المالك.",
-        "«الخدمات» — خدمات التأثيث والإدراج والإدارة الكاملة التي تقدّمها رنت رويز.",
-        "«منصات الحجز» — منصات الأطراف الثالثة مثل Airbnb وBooking.com التي قد تُدرَج عليها العقارات.",
-        "«اتفاقية الإدارة» — اتفاقية إدارة العقار المكتوبة والمنفصلة المُوقَّعة بين رنت رويز والمالك.",
-      ],
-    },
-    {
-      heading: "عن رنت رويز وخدماتنا",
+      heading: "القبول بالشروط",
       body: [
-        "رنت رويز شركة متخصصة في تشغيل العقارات للإيجار قصير ومتوسط الأجل. ويقوم نموذجنا على استلام العقارات من مُلّاكها وتأثيثها وتجهيزها على مستوى الضيافة، وإدراجها على منصات الحجز وقنواتنا الخاصة، وإدارة تشغيل الضيوف بالكامل — بما يشمل التواصل مع الضيوف وتسجيل الدخول والخروج والتنظيف والصيانة والتسعير وتحسين الإيرادات.",
-        "يحتفظ المالك بملكية العقار، وتتولى رنت رويز تشغيله، وتُقتسم الإيرادات بين المالك ورنت رويز بشفافية وفقاً لاتفاقية الإدارة.",
-        "المعلومات المعروضة على الموقع — بما في ذلك أي تقدير للإيرادات — هي للاسترشاد فقط، وتستند إلى بيانات السوق وافتراضات، ولا تُشكّل ضماناً للدخل أو الأداء.",
+        "باستخدام موقع RentRoyz أو إتمام أي حجز أو دفع من خلاله، يقر العميل بأنه قرأ وفهم ووافق على هذه الشروط والأحكام، بما في ذلك سياسة الدفع، الإلغاء، والاسترداد.",
       ],
     },
     {
-      heading: "الأهلية",
+      heading: "طبيعة الخدمة",
       body: [
-        "للاستعانة بخدماتنا يجب ألا يقل عمرك عن ١٨ عاماً وأن تتمتع بالأهلية النظامية لإبرام اتفاق ملزم. ويجب أن يكون لدى المالك الحق النظامي في إتاحة العقار للإيجار قصير الأجل وتفويض رنت رويز بإدارته.",
+        "تقدم RentRoyz خدمات متعلقة بالحجوزات اليومية وإدارة وتشغيل الوحدات السكنية أو السياحية أو العقارية المشابهة، وقد تكون الخدمة مقدمة مباشرة من RentRoyz أو من خلال شركاء أو ملاك أو مشغلين أو منصات حجز خارجية.",
       ],
     },
     {
-      heading: "الامتثال النظامي والترخيص",
+      heading: "دقة البيانات",
       body: [
-        "تمارس رنت رويز نشاطها وفقاً للأنظمة المعمول بها في المملكة العربية السعودية، ومن ذلك:",
-      ],
-      items: [
-        "نظام السياحة الصادر بالمرسوم الملكي رقم (م/٥١)، والأنظمة المنظِّمة لترخيص مرافق الضيافة والإيواء المفروش الصادرة عن وزارة السياحة، بما في ذلك المتطلبات المتعلقة بالإيجار قصير الأجل؛",
-        "نظام التجارة الإلكترونية الصادر بالمرسوم الملكي رقم (م/١٢٦) وتاريخ ٧/١١/١٤٤٠هـ، ولائحته التنفيذية؛",
-        "نظام مكافحة الجرائم المعلوماتية الصادر بالمرسوم الملكي رقم (م/١٧) وتاريخ ٨/٣/١٤٢٨هـ؛",
-        "نظام حماية البيانات الشخصية الصادر بالمرسوم الملكي رقم (م/١٩) وتاريخ ٩/٢/١٤٤٣هـ (وتعديلاته)، ولائحته التنفيذية؛",
-        "ونظام ضريبة القيمة المضافة ولائحته التنفيذية، بإشراف هيئة الزكاة والضريبة والجمارك.",
+        "يلتزم العميل بتقديم بيانات صحيحة ومحدثة عند الحجز، بما في ذلك الاسم، رقم الجوال، البريد الإلكتروني، عدد الضيوف، وتاريخ الدخول والخروج.",
+        "تحتفظ RentRoyz بحق إلغاء الحجز أو رفض الدخول إذا تبين وجود معلومات غير صحيحة أو مضللة.",
       ],
     },
     {
-      heading: "مسؤولية المالك عن التراخيص",
+      heading: "تأكيد الحجز",
       body: [
-        "يتحمّل المالك مسؤولية التأكد من جواز استخدام العقار نظاماً للإيجار قصير الأجل، بما في ذلك أي متطلبات تتعلق بالملكية أو الرهن أو لوائح اتحاد المُلّاك أو نظام المبنى أو موافقات الجهات البلدية أو جمعية المُلّاك. وحيثما يتطلب الأمر ترخيصاً أو تسجيلاً للإيجار قصير الأجل، تساعد رنت رويز المالك في الحصول عليه، إلا أن أهلية العقار الأساسية تظل مسؤولية المالك.",
+        "لا يعتبر الحجز مؤكدًا إلا بعد استلام الدفع المطلوب وصدور تأكيد رسمي من RentRoyz أو من المنصة التي تم الحجز من خلالها.",
+        "قد تخضع بعض الحجوزات للتحقق من الهوية أو استكمال متطلبات إضافية قبل الدخول.",
       ],
     },
     {
-      heading: "اتفاقية الإدارة",
+      heading: "الدخول والخروج",
       body: [
-        "تنطبق هذه الشروط على استخدامك للموقع وعلى العلاقة العامة بيننا. وبالنسبة للمُلّاك، تُستكمَل هذه الشروط باتفاقية إدارة مكتوبة ومنفصلة تحدّد الشروط التجارية — بما في ذلك الرسوم وحصة الإيرادات وجدول التحويلات والمدة. وفي حال وجود أي تعارض بين هذه الشروط واتفاقية الإدارة في مسألة تجارية، تكون الغلبة لاتفاقية الإدارة.",
+        "يجب على العميل الالتزام بأوقات الدخول والخروج الموضحة في الحجز.",
+        "أي تأخير في الخروج دون موافقة مسبقة قد يترتب عليه رسوم إضافية أو تحميل العميل أي خسائر ناتجة عن التأخير.",
       ],
     },
     {
-      heading: "التزامات المالك",
-      items: [
-        "تقديم معلومات دقيقة وكاملة ومحدّثة عن نفسه وعن العقار.",
-        "التأكد من امتلاكه حق الملكية النظامي للعقار أو الصلاحية عليه وحق تأجيره.",
-        "تسليم العقار في حالة مناسبة للتأثيث وإقامة الضيوف، والإفصاح عن أي عيوب معلومة.",
-        "الاحتفاظ بتأمين مناسب على العقار، ما لم يُتفق على خلاف ذلك في اتفاقية الإدارة.",
-        "التعاون على نحو معقول مع رنت رويز لتمكينها من تقديم الخدمات.",
-      ],
-    },
-    {
-      heading: "التزامات رنت رويز",
-      items: [
-        "تأثيث العقار وتجهيزه على مستوى الضيافة، وفق المتفق عليه مع المالك.",
-        "إدراج العقار على منصات الحجز وقنواتنا الخاصة وإدارة الحجوزات.",
-        "إدارة تشغيل الضيوف، بما يشمل التواصل وتسجيل الدخول والخروج والتنظيف والصيانة.",
-        "تحسين التسعير ومعدلات الإشغال وبيان الإيرادات بشفافية.",
-        "تزويد المالك بالتقارير والتحويلات وفقاً لاتفاقية الإدارة.",
-      ],
-    },
-    {
-      heading: "الرسوم وتقاسم الإيرادات والتحويلات",
+      heading: "استخدام الوحدة",
       body: [
-        "تُحدَّد الرسوم ونسبة تقاسم الإيرادات وجدول التحويلات في اتفاقية الإدارة. وتُطبَّق ضريبة القيمة المضافة حيثما يقتضيها النظام. وتُصدِر رنت رويز فواتير ضريبية وفقاً لمتطلبات هيئة الزكاة والضريبة والجمارك. وتُحوَّل المبالغ إلى الحساب البنكي الذي يحدّده المالك.",
+        "يلتزم العميل باستخدام الوحدة بطريقة نظامية وآمنة ومحافظة، وعدم استخدامها لأي غرض مخالف للأنظمة أو الآداب العامة أو شروط الحجز.",
+        "كما يلتزم العميل بعدم إزعاج الجيران، أو إقامة تجمعات غير مصرح بها، أو زيادة عدد الضيوف عن العدد المسموح، أو إحداث أي تلفيات في الوحدة أو محتوياتها.",
       ],
     },
     {
-      heading: "الحجوزات والضيوف",
+      heading: "الأضرار والمسؤولية",
       body: [
-        "تُقبَل الحجوزات وفقاً لقواعد العقار وشروط منصة الحجز ذات الصلة. وتُعالَج عمليات الإلغاء والاسترداد ونزاعات الضيوف وفقاً لسياسات منصة الحجز التي تم الحجز من خلالها ولاتفاقية الإدارة. ويُتوقَّع من الضيوف الالتزام بقواعد العقار والأنظمة المعمول بها ومتطلبات الجهات المختصة.",
+        "يتحمل العميل المسؤولية عن أي أضرار أو خسائر تحدث في الوحدة أو محتوياتها خلال فترة إقامته، إذا كانت ناتجة عن سوء استخدام أو إهمال أو مخالفة للشروط.",
+        "يحق لـ RentRoyz مطالبة العميل بتعويض مناسب عن الأضرار أو التكاليف الناتجة.",
       ],
     },
     {
-      heading: "الملكية الفكرية",
+      heading: "النظافة والصيانة",
       body: [
-        "الموقع ومحتواه — بما في ذلك النصوص والرسومات والشعارات واسم رنت رويز وعلامتها التجارية والصور والبرمجيات — مملوكة لرنت رويز أو لمرخّصيها ومحمية نظاماً. ولا يجوز لك نسخ أي جزء من الموقع أو إعادة إنتاجه أو توزيعه أو إنشاء أعمال مشتقة منه دون موافقتنا الكتابية المسبقة.",
+        "تلتزم RentRoyz أو الجهة المشغلة بتسليم الوحدة بحالة مناسبة للاستخدام، وعلى العميل المحافظة على نظافة الوحدة ومحتوياتها طوال فترة الإقامة.",
+        "في حال وجود ملاحظات على النظافة أو الصيانة، يجب إبلاغ RentRoyz فورًا عند الدخول أو خلال مدة معقولة من اكتشاف المشكلة.",
       ],
     },
     {
-      heading: "الاستخدام المقبول للموقع",
+      heading: "الصور والمواصفات",
       body: [
-        "توافق على استخدام الموقع للأغراض المشروعة فقط. ولا يجوز لك استخدام الموقع بأي طريقة تخالف الأنظمة المعمول بها — بما في ذلك نظام مكافحة الجرائم المعلوماتية — أو محاولة الوصول غير المصرّح به إلى أنظمتنا، أو إدخال برمجيات ضارة، أو التشويش على التشغيل السليم للموقع.",
+        "تحرص RentRoyz على عرض صور ومعلومات دقيقة قدر الإمكان عن الوحدات. ومع ذلك، قد توجد اختلافات بسيطة في الأثاث أو الديكور أو الترتيب حسب التحديثات التشغيلية أو طبيعة الوحدة.",
+        "لا تعد الاختلافات البسيطة سببًا للاسترداد ما لم يكن هناك اختلاف جوهري يؤثر على استخدام الوحدة أو يخالف ما تم تأكيده للعميل.",
       ],
     },
     {
-      heading: "منصات الأطراف الثالثة والروابط",
+      heading: "المنصات الخارجية",
       body: [
-        "يعتمد الموقع والخدمات على منصات أطراف ثالثة — بما في ذلك منصات الحجز وأدوات الجدولة — وقد يتضمن روابط لمواقع أطراف ثالثة. وتخضع تلك المنصات والمواقع لشروطها وسياسات الخصوصية الخاصة بها. ولا تتحمّل رنت رويز مسؤولية محتوى الأطراف الثالثة أو سياساتها أو ممارساتها.",
+        "في حال تم الحجز من خلال منصة خارجية، فإن العميل يوافق على الالتزام بشروط وأحكام تلك المنصة، بما في ذلك سياسة الدفع والإلغاء والاسترداد.",
+        "وفي حال وجود تعارض بين سياسة RentRoyz وسياسة المنصة، تسري سياسة المنصة على الحجز الذي تم من خلالها، ما لم تنص الأنظمة المعمول بها على خلاف ذلك.",
       ],
     },
     {
-      heading: "إخلاء المسؤولية وحدودها",
+      heading: "الحالات الطارئة والقوة القاهرة",
       body: [
-        "يُقدَّم الموقع ومحتواه «كما هو» و«حسب توافره». وتقديرات الإيرادات وغيرها من الأرقام المعروضة على الموقع هي للاسترشاد ولا تُشكّل ضماناً للنتائج. وإلى أقصى حد يسمح به نظام المملكة العربية السعودية، لا تتحمّل رنت رويز مسؤولية أي خسارة غير مباشرة أو تبعية، أو فوات ربح أو إيراد، ناشئة عن استخدام الموقع. ولا يوجد في هذه الشروط ما يستثني أو يحدّ من المسؤولية التي لا يجوز نظاماً استثناؤها أو الحدّ منها.",
+        "لا تتحمل RentRoyz المسؤولية عن أي تأخير أو إلغاء أو تعذر في تقديم الخدمة ناتج عن ظروف خارجة عن السيطرة، مثل الكوارث الطبيعية، انقطاع الخدمات العامة، القرارات الحكومية، الحوادث الطارئة، أو أي حالة قوة قاهرة.",
+        "وفي هذه الحالات، ستعمل RentRoyz على إيجاد حل مناسب قدر الإمكان.",
       ],
     },
     {
-      heading: "التعويض",
+      heading: "الخصوصية والبيانات",
       body: [
-        "توافق على تعويض رنت رويز عن أي مطالبات أو خسائر أو تكاليف ناشئة عن إخلالك بهذه الشروط، أو مخالفتك للأنظمة المعمول بها، أو — في حالة المالك — أي معلومات غير دقيقة أو انتفاء أي حق نظامي يتعلق بالعقار.",
+        "تتعامل RentRoyz مع بيانات العملاء وفقًا لسياسة الخصوصية المنشورة في الموقع، وبما يتوافق مع الأنظمة المعمول بها في المملكة العربية السعودية.",
+        "باستخدام الموقع، يوافق العميل على جمع ومعالجة البيانات اللازمة لإتمام الحجز، التواصل، الدفع، التحقق، وخدمة العملاء.",
       ],
     },
     {
-      heading: "القوة القاهرة",
+      heading: "الشكاوى والتواصل",
       body: [
-        "لا تتحمّل رنت رويز مسؤولية أي إخفاق أو تأخير في أداء التزاماتها ناتج عن أحداث خارجة عن سيطرتها المعقولة، بما في ذلك الأحداث الطبيعية أو الإجراءات الحكومية أو التغييرات النظامية أو انقطاع منصات الأطراف الثالثة أو الخدمات.",
+        "في حال وجود أي شكوى أو ملاحظة، يمكن للعميل التواصل مع RentRoyz عبر قنوات التواصل الرسمية الموضحة في الموقع.",
+        "تلتزم RentRoyz بمراجعة الشكاوى بجدية والعمل على حلها خلال مدة مناسبة حسب طبيعة الحالة.",
       ],
     },
     {
-      heading: "المدة والإنهاء",
+      heading: "تعديل الشروط",
       body: [
-        "يستمر حقك في استخدام الموقع طوال سريان هذه الشروط. وتخضع مدة علاقة الإدارة وإنهاؤها بالنسبة للمُلّاك لاتفاقية الإدارة. ويجوز لنا تعليق الوصول إلى الموقع أو تقييده عند الحاجة لحماية الموقع أو مستخدميه أو مصالحنا المشروعة.",
+        "تحتفظ RentRoyz بحق تعديل هذه الشروط والأحكام أو سياسة الدفع والاسترداد من وقت لآخر، ويتم تطبيق النسخة المنشورة في الموقع وقت الحجز أو وقت استخدام الخدمة.",
       ],
     },
     {
-      heading: "التعديلات على هذه الشروط",
+      heading: "القانون المعمول به",
       body: [
-        "قد نُحدّث هذه الشروط من حين لآخر. وستظل النسخة الحالية، مع تاريخ «آخر تحديث»، متاحة دائماً على هذه الصفحة. ويُعدّ استمرارك في استخدام الموقع بعد سريان أي تعديل قبولاً للشروط المحدّثة.",
-      ],
-    },
-    {
-      heading: "النظام الواجب التطبيق وتسوية النزاعات",
-      body: [
-        "تخضع هذه الشروط، وأي نزاع أو مطالبة تنشأ عنها أو ترتبط بها أو باستخدامك للموقع أو الخدمات، لأنظمة المملكة العربية السعودية. وتختص المحاكم المختصة في المملكة العربية السعودية دون غيرها بالفصل في أي نزاع من هذا القبيل.",
-      ],
-    },
-    {
-      heading: "التواصل معنا",
-      body: ["إذا كان لديك أي سؤال بخصوص هذه الشروط، فيُرجى التواصل معنا:"],
-      items: [
-        `اسم الشركة: ${COMPANY.legalName.ar}`,
-        `رقم السجل التجاري: ${COMPANY.cr}`,
-        `الرقم الضريبي (ضريبة القيمة المضافة): ${COMPANY.vat}`,
-        `العنوان: ${COMPANY.address.ar}`,
-        `البريد الإلكتروني: ${COMPANY.email}`,
-        `الهاتف: ${COMPANY.phone}`,
+        "تخضع هذه الشروط والأحكام للأنظمة المعمول بها في المملكة العربية السعودية، وتكون الجهات المختصة في المملكة هي المرجع في حال حدوث أي نزاع لا يتم حله وديًا.",
       ],
     },
   ],
-  disclaimerLabel: SHARED_DISCLAIMER_LABEL.ar,
-  disclaimer: SHARED_DISCLAIMER.ar,
+};
+
+// Client-provided text — supplied by Rent Royz on 14/05/2026, used verbatim.
+const paymentAr: LegalDoc = {
+  title: "سياسة الدفع والاسترداد",
+  tagline: "كيف تتعامل RentRoyz مع المدفوعات والإلغاء والاسترداد.",
+  lastUpdatedLabel: "آخر تحديث",
+  lastUpdated: "14/05/2026",
+  intro: [],
+  sections: [
+    {
+      heading: "سياسة الدفع",
+      body: [
+        "تتم جميع المدفوعات الخاصة بالحجوزات أو الخدمات المقدمة عبر RentRoyz من خلال وسائل الدفع المعتمدة في الموقع أو من خلال قنوات الدفع التي تحددها الشركة.",
+        "يجب على العميل سداد كامل المبلغ المطلوب لتأكيد الحجز أو الخدمة، ويُعد الحجز غير مؤكد إلا بعد استلام الدفعة بنجاح وصدور تأكيد الحجز من RentRoyz أو من المنصة التي تم الحجز من خلالها.",
+        "تشمل المبالغ المدفوعة، حسب طبيعة الحجز، قيمة الإقامة أو الخدمة، الرسوم التشغيلية، رسوم التنظيف، الضرائب، وأي رسوم إضافية يتم توضيحها للعميل قبل إتمام عملية الدفع.",
+      ],
+    },
+    {
+      heading: "المبالغ غير المستردة",
+      body: [
+        "جميع المبالغ المدفوعة تعتبر غير مستردة بعد تأكيد الحجز، إلا في الحالات التي يثبت فيها وجود خلل جوهري في الوحدة يمنع العميل من الاستفادة من الحجز بالشكل المتفق عليه.",
+        "ويشمل ذلك، على سبيل المثال لا الحصر: وجود مشكلة تشغيلية جوهرية في الوحدة، أو عدم جاهزية الوحدة للسكن، أو اختلاف جوهري بين الوحدة المؤكدة والوحدة المسلمة للعميل، أو وجود خلل مؤثر في الخدمات الأساسية مثل الكهرباء أو المياه أو التكييف إذا كان الخلل قائماً قبل أو عند وقت الدخول ولم تتم معالجته خلال مدة معقولة.",
+        "لا يشمل الاسترداد الحالات الناتجة عن تغيير رغبة العميل، أو عدم الحضور، أو التأخر في الوصول، أو المغادرة المبكرة، أو تغيير الخطط الشخصية، أو عدم قراءة تفاصيل الحجز والسياسات قبل الدفع.",
+      ],
+    },
+    {
+      heading: "الاسترداد في حال وجود خلل في الوحدة",
+      body: [
+        "في حال وجود خلل في الوحدة، يجب على العميل إبلاغ RentRoyz فورًا عبر قنوات التواصل المعتمدة، مع تقديم ما يثبت المشكلة مثل الصور أو الفيديو أو وصف واضح للحالة.",
+        "تقوم RentRoyz بمراجعة الحالة والتحقق منها، وقد يتم اتخاذ أحد الإجراءات التالية حسب تقدير الشركة وطبيعة الحالة: توفير حل مناسب أو صيانة عاجلة، أو نقل العميل إلى وحدة بديلة متاحة ومناسبة، أو تعويض جزئي، أو استرداد كامل أو جزئي للمبلغ المدفوع في حال ثبت أن الخلل يمنع الاستفادة من الحجز ولم يتم توفير بديل مناسب.",
+        "يتم تقييم كل حالة بناءً على ظروفها، ولا يُعد وجود ملاحظة بسيطة أو عيب غير مؤثر سببًا تلقائيًا للاسترداد.",
+      ],
+    },
+    {
+      heading: "الحجوزات من خلال منصات خارجية",
+      body: [
+        "إذا تم الحجز من خلال منصة خارجية مثل Booking.com أو Airbnb أو أي منصة حجوزات أخرى، فإن سياسة الإلغاء والاسترداد تكون خاضعة بشكل أساسي لسياسة المنصة التي تم الحجز من خلالها.",
+        "في هذه الحالة، لا تلتزم RentRoyz بإصدار أي استرداد مباشر خارج آلية المنصة، ويجب على العميل تقديم طلب الإلغاء أو الاسترداد من خلال نفس المنصة التي أتم الحجز عبرها.",
+        "قد تساعد RentRoyz في مراجعة الحالة أو تزويد المنصة بالمعلومات اللازمة، ولكن القرار النهائي بشأن الاسترداد أو الإلغاء يكون وفقًا لسياسة المنصة وشروط الحجز المعتمدة لديها.",
+      ],
+    },
+    {
+      heading: "الإلغاء من قبل العميل",
+      body: [
+        "في حال رغب العميل في إلغاء الحجز بعد تأكيده، يتم تطبيق سياسة الإلغاء الموضحة وقت الحجز.",
+        "إذا كان الحجز مصنفًا على أنه غير قابل للاسترداد، فلن يتم إعادة أي مبالغ مدفوعة، إلا في الحالات التي يثبت فيها وجود خلل جوهري في الوحدة أو تعذر تقديم الخدمة بسبب سبب راجع إلى RentRoyz.",
+      ],
+    },
+    {
+      heading: "الإلغاء من قبل RentRoyz",
+      body: [
+        "تحتفظ RentRoyz بحق إلغاء أو تعديل الحجز في حالات الضرورة، مثل الظروف التشغيلية الطارئة، أو تعذر تجهيز الوحدة، أو وجود خلل يمنع استخدامها، أو أي سبب خارج عن السيطرة.",
+        "في هذه الحالات، ستعمل RentRoyz على توفير بديل مناسب متى ما كان ذلك ممكنًا، أو إعادة المبلغ المدفوع حسب الحالة.",
+      ],
+    },
+    {
+      heading: "رسوم إضافية",
+      body: [
+        "قد يتم فرض رسوم إضافية على العميل في حال حدوث أضرار في الوحدة، أو فقدان مفاتيح أو بطاقات دخول، أو مخالفة شروط الاستخدام، أو تجاوز عدد الضيوف المسموح به، أو التدخين في وحدة غير مخصصة للتدخين، أو التأخر في الخروج دون موافقة مسبقة.",
+        "يتم احتساب هذه الرسوم بناءً على قيمة الضرر أو التكلفة الفعلية أو السياسة الموضحة في صفحة الحجز.",
+      ],
+    },
+    {
+      heading: "مدة معالجة الاسترداد",
+      body: [
+        "في حال الموافقة على الاسترداد، تتم معالجة المبلغ خلال مدة مناسبة حسب وسيلة الدفع المستخدمة، وقد تختلف مدة وصول المبلغ إلى حساب العميل وفقًا للبنك أو مزود خدمة الدفع.",
+        "إذا كان الحجز من خلال منصة خارجية، فإن مدة وآلية الاسترداد تخضع لإجراءات تلك المنصة.",
+      ],
+    },
+  ],
 };
 
 // ── Lookup ─────────────────────────────────────────────────────────────────
 
-export type LegalDocId = "privacy" | "terms";
+export type LegalDocId = "privacy" | "terms" | "payment";
 
 const DOCS: Record<Locale, Record<LegalDocId, LegalDoc>> = {
-  en: { privacy: privacyEn, terms: termsEn },
-  ar: { privacy: privacyAr, terms: termsAr },
+  en: { privacy: privacyEn, terms: termsEn, payment: paymentEn },
+  ar: { privacy: privacyAr, terms: termsAr, payment: paymentAr },
 };
 
 export function getLegalDoc(locale: Locale, id: LegalDocId): LegalDoc {

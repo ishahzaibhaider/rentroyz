@@ -84,6 +84,15 @@ export default async function Footer() {
           >
             {t("terms")}
           </Link>
+          <span className="text-sand/20" aria-hidden>
+            •
+          </span>
+          <Link
+            href="/payment-policy"
+            className="text-sand/60 transition-colors hover:text-sand"
+          >
+            {t("paymentPolicy")}
+          </Link>
         </nav>
 
         <p className="mt-6 text-sm">
