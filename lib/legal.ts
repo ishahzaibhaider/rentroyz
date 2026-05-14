@@ -2,14 +2,15 @@ import type { Locale } from "./i18n/request";
 
 // Legal content for the Privacy Policy and Terms & Conditions pages.
 //
-// These documents were drafted against the public legal framework of the
-// Kingdom of Saudi Arabia — the Personal Data Protection Law, the E-Commerce
-// Law, the Anti-Cyber Crime Law, the Tourism Law, and the VAT Law — and
-// reflect standard practice for a short-term-rental property operator. They
-// are templates: a licensed Saudi legal practitioner should review them
-// before they are relied on, and every `[bracketed]` placeholder must be
-// filled in with the company's registered details. See `disclaimer` below,
-// which is also surfaced on the page itself.
+// Privacy Policy: client-provided. The text in `privacyEn` / `privacyAr` was
+// supplied verbatim by the client (Rent Royz) and should not be edited
+// without their sign-off. It carries no template disclaimer.
+//
+// Terms & Conditions: drafted in-house against the public legal framework of
+// the Kingdom of Saudi Arabia (PDPL, E-Commerce Law, Anti-Cyber Crime Law,
+// Tourism Law, VAT Law). It still carries the `disclaimer` notice — a
+// licensed Saudi legal practitioner should review it before it is relied on,
+// and it should be replaced if the client supplies their own Terms text.
 
 export type LegalSection = {
   heading: string;
@@ -26,26 +27,24 @@ export type LegalDoc = {
   lastUpdated: string;
   intro: string[];
   sections: LegalSection[];
-  disclaimerLabel: string;
-  disclaimer: string;
+  /** Optional template disclaimer — present on the in-house Terms draft,
+      omitted from the client-provided Privacy Policy. */
+  disclaimerLabel?: string;
+  disclaimer?: string;
 };
 
-// Official company identifiers — provided by the client and already shown in
-// the site footer. The VAT number is the ZATCA registration; the CR number is
-// the Ministry of Commerce commercial registration that serves as the
-// business licence. `legalName` and `address` are genuine unknowns and must
-// be supplied by the client before submission.
+// Official company identifiers — supplied by the client. The VAT number is
+// the ZATCA registration; the CR number is the Ministry of Commerce
+// commercial registration that serves as the business licence. The legal
+// name and address were confirmed by the client on 14/05/2026.
 export const COMPANY = {
   brandName: { en: "Rent Royz", ar: "رنت رويز" },
-  legalName: {
-    en: "[Registered legal entity name]",
-    ar: "[الاسم النظامي المسجّل للمنشأة]",
-  },
+  legalName: { en: "RentRoyz", ar: "RentRoyz" },
   cr: "7053041203",
   vat: "314497025100003",
   address: {
-    en: "[Registered business address, Kingdom of Saudi Arabia]",
-    ar: "[العنوان الوطني المسجّل للمنشأة، المملكة العربية السعودية]",
+    en: "Riyadh, Kingdom of Saudi Arabia",
+    ar: "الرياض، المملكة العربية السعودية",
   },
   email: "info@rentroyz.com",
   phone: "+966 55 650 0470",
@@ -57,165 +56,150 @@ const SHARED_DISCLAIMER_LABEL = {
 };
 
 const SHARED_DISCLAIMER = {
-  en: "This document is provided for general information. It was prepared against the publicly available legal framework of the Kingdom of Saudi Arabia and reflects standard practice; it does not constitute legal advice. Rent Royz recommends that it be reviewed by a licensed Saudi legal practitioner, and any items shown in square brackets must be completed with the company's registered details before this document is relied upon.",
-  ar: "هذا المستند مُقدَّم لأغراض المعلومات العامة. وقد أُعِدَّ استناداً إلى الإطار النظامي المتاح للعموم في المملكة العربية السعودية ووفق الممارسات المعتادة، ولا يُعدّ استشارة قانونية. توصي رنت رويز بمراجعته من قِبل ممارس قانوني سعودي مرخّص، ويجب استكمال أي بنود تظهر بين قوسين مربّعين ببيانات المنشأة المسجّلة قبل الاعتماد عليه.",
+  en: "This document is provided for general information. It was prepared against the publicly available legal framework of the Kingdom of Saudi Arabia and reflects standard practice; it does not constitute legal advice. Rent Royz recommends that it be reviewed by a licensed Saudi legal practitioner before it is relied upon.",
+  ar: "هذا المستند مُقدَّم لأغراض المعلومات العامة. وقد أُعِدَّ استناداً إلى الإطار النظامي المتاح للعموم في المملكة العربية السعودية ووفق الممارسات المعتادة، ولا يُعدّ استشارة قانونية. توصي رنت رويز بمراجعته من قِبل ممارس قانوني سعودي مرخّص قبل الاعتماد عليه.",
 };
 
 // ── English ────────────────────────────────────────────────────────────────
 
+// Client-provided text — supplied by Rent Royz on 14/05/2026, used verbatim.
 const privacyEn: LegalDoc = {
   title: "Privacy Policy",
-  tagline:
-    "How Rent Royz collects, uses, discloses, and protects personal data.",
-  lastUpdatedLabel: "Last updated",
-  lastUpdated: "14 May 2026",
-  intro: [
-    "Rent Royz (“Rent Royz”, “we”, “us”, or “our”) operates the website rentroyz.com and provides short-term and mid-term rental property management services in the Kingdom of Saudi Arabia. We furnish properties on behalf of their owners, list them on booking platforms and our own channels, and manage the end-to-end guest operation.",
-    "This Privacy Policy explains how we collect, use, disclose, store, and protect your personal data, and the rights available to you. It is intended to comply with the Personal Data Protection Law of the Kingdom of Saudi Arabia, issued by Royal Decree No. M/19 dated 9/2/1443H and amended by Royal Decree No. M/148 dated 5/9/1444H, together with its Implementing Regulations, as administered by the Saudi Data and Artificial Intelligence Authority (SDAIA).",
-    "By using our website or our services, you confirm that you have read and understood this Policy. If you do not agree with it, please do not use the website or engage our services.",
-  ],
+  tagline: "How RentRoyz collects, uses, and protects your personal data.",
+  lastUpdatedLabel: "Last Updated",
+  lastUpdated: "14/05/2026",
+  intro: [],
   sections: [
     {
-      heading: "Who we are",
+      heading: "Introduction",
       body: [
-        "The party responsible for your personal data (the data controller) is Rent Royz, a business registered in the Kingdom of Saudi Arabia.",
+        "This Privacy Policy explains how RentRoyz collects, uses, processes, stores, and protects personal data when using the website or related services, in compliance with the Saudi Personal Data Protection Law (PDPL) and its applicable regulations.",
+      ],
+    },
+    {
+      heading: "Information We Collect",
+      body: ["We may collect the following information:"],
+      items: [
+        "Full name",
+        "Mobile number",
+        "Email address",
+        "City or address",
+        "Identification details when legally required",
+        "Booking or order information",
+        "Payment information when applicable",
+        "Website usage data",
+        "IP address, browser, and device information",
+        "Cookies and tracking technologies",
+      ],
+    },
+    {
+      heading: "Methods of Data Collection",
+      body: ["Personal data may be collected through:"],
+      items: [
+        "Online forms",
+        "Account registration",
+        "Communication via email, phone, or WhatsApp",
+        "Website and service usage",
+        "Cookies and analytics tools",
+      ],
+    },
+    {
+      heading: "Purpose of Data Processing",
+      body: ["Personal data is processed for the following purposes:"],
+      items: [
+        "Providing services and operating the website",
+        "Managing orders and bookings",
+        "Customer communication and support",
+        "Improving user experience",
+        "Sending updates and marketing communications where consent is required",
+        "Compliance with applicable laws and regulations",
+        "Preventing fraud and unauthorized use",
+      ],
+    },
+    {
+      heading: "Legal Basis for Processing",
+      body: [
+        "Personal data is processed based on one or more of the following legal bases:",
       ],
       items: [
-        `Registered name: ${COMPANY.legalName.en}`,
-        `Trading as: ${COMPANY.brandName.en}`,
-        `Commercial Registration (CR) No.: ${COMPANY.cr}`,
-        `VAT Registration No.: ${COMPANY.vat}`,
-        `Registered address: ${COMPANY.address.en}`,
+        "User consent",
+        "Contractual necessity",
+        "Compliance with legal obligations",
+        "Legitimate interests that do not conflict with data subject rights",
+      ],
+    },
+    {
+      heading: "Data Sharing",
+      body: [
+        "Personal data is not sold or rented to third parties.",
+        "Data may be shared with:",
+      ],
+      items: [
+        "Technical and operational service providers",
+        "Payment service providers",
+        "Governmental or regulatory authorities when legally required",
+        "Judicial or law enforcement authorities when necessary",
+      ],
+    },
+    {
+      heading: "International Data Transfers",
+      body: [
+        "If personal data is transferred or processed outside the Kingdom of Saudi Arabia, such transfer shall be conducted in accordance with applicable legal requirements and adequate protection measures.",
+      ],
+    },
+    {
+      heading: "Data Security",
+      body: [
+        "Appropriate technical, organizational, and security measures are implemented to protect personal data against unauthorized access, disclosure, alteration, loss, or destruction.",
+      ],
+    },
+    {
+      heading: "Data Retention",
+      body: [
+        "Personal data is retained only for the period necessary to fulfill the purposes stated in this policy or as required by applicable laws and regulations.",
+      ],
+    },
+    {
+      heading: "Data Subject Rights",
+      body: ["Data subjects have the right to:"],
+      items: [
+        "Access their personal data",
+        "Request correction of inaccurate information",
+        "Request deletion where legally permissible",
+        "Withdraw consent where processing is based on consent",
+        "Submit complaints to the competent authority",
+      ],
+    },
+    {
+      heading: "Cookies",
+      body: [
+        "The website may use cookies and similar technologies to enhance functionality, user experience, and analytics.",
+      ],
+    },
+    {
+      heading: "Policy Updates",
+      body: [
+        "RentRoyz reserves the right to amend this Privacy Policy at any time. Updated versions will be published on the website with the revised effective date.",
+      ],
+    },
+    {
+      heading: "Contact Information",
+      items: [
+        `Company Name: ${COMPANY.legalName.en}`,
         `Email: ${COMPANY.email}`,
-        `Phone: ${COMPANY.phone}`,
-      ],
-    },
-    {
-      heading: "Personal data we collect",
-      body: [
-        "Depending on how you interact with us — as a property owner, a guest, or a website visitor — we may collect the following categories of personal data:",
-      ],
-      items: [
-        "Identity data — full name, nationality, National ID or Iqama number, and date of birth where required for verification.",
-        "Contact data — email address, telephone number, and postal or national address.",
-        "Property data — for owners: property location, title deed or ownership documentation, property photographs, and details of fixtures and furnishings.",
-        "Financial data — bank account or IBAN details for payouts, VAT registration details where applicable, and records of payments and revenue shares.",
-        "Booking and guest data — reservation details, stay dates, and communications relating to a booking.",
-        "Technical data — IP address, browser type and version, device information, and data collected through cookies and similar technologies when you visit our website.",
-        "Communications data — the content of enquiries, messages, and correspondence you exchange with us.",
-      ],
-    },
-    {
-      heading: "How we collect your data",
-      items: [
-        "Directly from you — when you complete a form on our website, request a revenue estimate, contact us, or go through owner onboarding.",
-        "Automatically — through cookies and analytics tools when you browse our website.",
-        "From third parties — from booking platforms such as Airbnb and Booking.com, from payment service providers, and from government or verification services where required to deliver or to lawfully provide our services.",
-      ],
-    },
-    {
-      heading: "Purposes for which we use your data",
-      body: [
-        "We process personal data only where there is a lawful basis to do so under the Personal Data Protection Law — including the performance of a contract with you, compliance with a legal obligation, our legitimate interests, or your consent. We use personal data to:",
-      ],
-      items: [
-        "Provide our property management services, including furnishing, listing, and operating properties.",
-        "Create and manage listings on booking platforms and process reservations.",
-        "Process payments, revenue shares, and payouts, and maintain accounting and tax records.",
-        "Verify identity and ownership and carry out related due-diligence checks.",
-        "Communicate with you about your property, your account, bookings, and service updates.",
-        "Comply with legal and regulatory obligations, including tourism licensing, taxation, and anti-financial-crime requirements.",
-        "Operate, maintain, secure, and improve our website and services.",
-        "Send marketing communications where you have consented to receive them; you may withdraw that consent at any time.",
-      ],
-    },
-    {
-      heading: "Cookies and analytics",
-      body: [
-        "Our website uses cookies and similar technologies to keep the site functioning, to remember your language preference, and to understand how visitors use the site so that we can improve it. You can control or disable cookies through your browser settings; disabling some cookies may affect how the website works.",
-      ],
-    },
-    {
-      heading: "Disclosure of your data",
-      body: [
-        "We do not sell your personal data. We may disclose it only as necessary and as permitted by law, to:",
-      ],
-      items: [
-        "Booking platforms — such as Airbnb and Booking.com — to the extent needed to list properties and manage reservations.",
-        "Payment service providers and banks — to process payments and payouts.",
-        "Service providers acting on our behalf — such as cleaning, maintenance, photography, scheduling, and hosting providers — who are bound to protect the data.",
-        "Professional advisers — such as legal, accounting, and audit advisers.",
-        "Government, regulatory, and judicial authorities — including the Ministry of Tourism, the Zakat, Tax and Customs Authority (ZATCA), and SDAIA — where disclosure is required by law or to establish, exercise, or defend legal rights.",
-      ],
-    },
-    {
-      heading: "Transfer of data outside the Kingdom",
-      body: [
-        "Your personal data is primarily processed and stored within the Kingdom of Saudi Arabia. Where any transfer or processing outside the Kingdom is necessary — for example through an international booking platform — it will be carried out only in accordance with the conditions and safeguards required by the Personal Data Protection Law and its Implementing Regulations.",
-      ],
-    },
-    {
-      heading: "Data retention",
-      body: [
-        "We keep personal data only for as long as necessary to fulfil the purposes for which it was collected, including to satisfy any legal, accounting, tax, or regulatory requirements. Financial and tax records are retained for the period required by Saudi law. When data is no longer needed, it is securely destroyed or anonymised.",
-      ],
-    },
-    {
-      heading: "Data security",
-      body: [
-        "We apply appropriate technical and organisational measures to protect personal data against loss, unauthorised access, alteration, or disclosure. Access to personal data is limited to those who need it to perform their role. While no method of transmission or storage is completely secure, we work to protect your data and to maintain the safeguards required by law.",
-      ],
-    },
-    {
-      heading: "Your rights",
-      body: [
-        "Under the Personal Data Protection Law, and subject to its conditions and exceptions, you have the right to:",
-      ],
-      items: [
-        "Be informed of the legal basis and purpose for collecting your personal data.",
-        "Access your personal data held by us.",
-        "Request a copy of your personal data in a readable format.",
-        "Request the correction of personal data that is inaccurate, incomplete, or out of date.",
-        "Request the destruction of your personal data where it is no longer needed.",
-        "Withdraw your consent to the processing of your personal data at any time, where processing is based on consent.",
-      ],
-    },
-    {
-      heading: "How to exercise your rights",
-      body: [
-        `To exercise any of these rights, contact us at ${COMPANY.email} or ${COMPANY.phone}. We will respond to your request within the period required by law. There is normally no charge for exercising your rights.`,
-      ],
-    },
-    {
-      heading: "Children's privacy",
-      body: [
-        "Our website and services are directed to property owners and adult users. We do not knowingly collect personal data from minors. If you believe a minor has provided us with personal data, please contact us so that we can take appropriate action.",
-      ],
-    },
-    {
-      heading: "Changes to this Policy",
-      body: [
-        "We may update this Privacy Policy from time to time to reflect changes in our practices or in the law. The current version, with its “Last updated” date, will always be available on this page. Significant changes will be communicated where appropriate.",
-      ],
-    },
-    {
-      heading: "Contact us and complaints",
-      body: [
-        `If you have any question, request, or complaint about this Policy or about how we handle your personal data, please contact us at ${COMPANY.email} or ${COMPANY.phone}.`,
-        "If you are not satisfied with our response, you have the right to lodge a complaint with the Saudi Data and Artificial Intelligence Authority (SDAIA) as the competent supervisory authority in the Kingdom of Saudi Arabia.",
+        `Phone Number: ${COMPANY.phone}`,
+        `Address: ${COMPANY.address.en}`,
       ],
     },
   ],
-  disclaimerLabel: SHARED_DISCLAIMER_LABEL.en,
-  disclaimer: SHARED_DISCLAIMER.en,
 };
 
 const termsEn: LegalDoc = {
   title: "Terms & Conditions",
   tagline:
     "The terms governing your use of the Rent Royz website and services.",
-  lastUpdatedLabel: "Last updated",
-  lastUpdated: "14 May 2026",
+  lastUpdatedLabel: "Last Updated",
+  lastUpdated: "14/05/2026",
   intro: [
     "These Terms and Conditions (the “Terms”) govern your access to and use of the website rentroyz.com and the property management services provided by Rent Royz in the Kingdom of Saudi Arabia.",
     "By accessing the website or engaging our services, you agree to be bound by these Terms. If you do not agree with them, please do not use the website or our services.",
@@ -349,7 +333,7 @@ const termsEn: LegalDoc = {
     {
       heading: "Amendments to these Terms",
       body: [
-        "We may update these Terms from time to time. The current version, with its “Last updated” date, will always be available on this page. Your continued use of the website after a change takes effect constitutes acceptance of the updated Terms.",
+        "We may update these Terms from time to time. The current version, with its “Last Updated” date, will always be available on this page. Your continued use of the website after a change takes effect constitutes acceptance of the updated Terms.",
       ],
     },
     {
@@ -364,11 +348,10 @@ const termsEn: LegalDoc = {
         "If you have any question about these Terms, please contact us:",
       ],
       items: [
-        `Registered name: ${COMPANY.legalName.en}`,
-        `Trading as: ${COMPANY.brandName.en}`,
+        `Company name: ${COMPANY.legalName.en}`,
         `Commercial Registration (CR) No.: ${COMPANY.cr}`,
         `VAT Registration No.: ${COMPANY.vat}`,
-        `Registered address: ${COMPANY.address.en}`,
+        `Address: ${COMPANY.address.en}`,
         `Email: ${COMPANY.email}`,
         `Phone: ${COMPANY.phone}`,
       ],
@@ -380,157 +363,143 @@ const termsEn: LegalDoc = {
 
 // ── Arabic ─────────────────────────────────────────────────────────────────
 
+// Client-provided text — supplied by Rent Royz on 14/05/2026, used verbatim.
 const privacyAr: LegalDoc = {
   title: "سياسة الخصوصية",
-  tagline: "كيف تجمع رنت رويز البيانات الشخصية وتستخدمها وتُفصح عنها وتحميها.",
+  tagline: "كيف تجمع RentRoyz بياناتك الشخصية وتستخدمها وتحميها.",
   lastUpdatedLabel: "آخر تحديث",
-  lastUpdated: "١٤ مايو ٢٠٢٦",
-  intro: [
-    "تُشغّل رنت رويز («رنت رويز» أو «نحن») الموقع الإلكتروني rentroyz.com وتقدّم خدمات إدارة العقارات للإيجار قصير ومتوسط الأجل في المملكة العربية السعودية. نقوم بتأثيث العقارات نيابةً عن مُلّاكها، وإدراجها على منصات الحجز وقنواتنا الخاصة، وإدارة تشغيل الضيوف بالكامل.",
-    "توضّح سياسة الخصوصية هذه كيفية جمعنا لبياناتك الشخصية واستخدامها والإفصاح عنها وتخزينها وحمايتها، والحقوق المتاحة لك. وقد أُعِدَّت بما يتوافق مع نظام حماية البيانات الشخصية في المملكة العربية السعودية الصادر بالمرسوم الملكي رقم (م/١٩) وتاريخ ٩/٢/١٤٤٣هـ، والمعدّل بالمرسوم الملكي رقم (م/١٤٨) وتاريخ ٥/٩/١٤٤٤هـ، ولائحته التنفيذية، وبإشراف الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا).",
-    "باستخدامك لموقعنا الإلكتروني أو خدماتنا، فإنك تُقِرّ بأنك قرأت هذه السياسة وفهمتها. وإذا كنت لا توافق عليها، فيُرجى عدم استخدام الموقع أو الاستعانة بخدماتنا.",
-  ],
+  lastUpdated: "14/05/2026",
+  intro: [],
   sections: [
     {
-      heading: "من نحن",
+      heading: "مقدمة",
       body: [
-        "الجهة المسؤولة عن بياناتك الشخصية (جهة التحكّم بالبيانات) هي رنت رويز، وهي منشأة مسجّلة في المملكة العربية السعودية.",
-      ],
-      items: [
-        `الاسم المسجّل: ${COMPANY.legalName.ar}`,
-        `الاسم التجاري: ${COMPANY.brandName.ar}`,
-        `رقم السجل التجاري: ${COMPANY.cr}`,
-        `الرقم الضريبي (ضريبة القيمة المضافة): ${COMPANY.vat}`,
-        `العنوان المسجّل: ${COMPANY.address.ar}`,
-        `البريد الإلكتروني: ${COMPANY.email}`,
-        `الهاتف: ${COMPANY.phone}`,
+        "توضح سياسة الخصوصية هذه كيفية قيام شركة RentRoyz بجمع البيانات الشخصية واستخدامها ومعالجتها وحمايتها عند استخدام الموقع أو الخدمات المرتبطة به، وذلك بما يتوافق مع نظام حماية البيانات الشخصية في المملكة العربية السعودية (PDPL) واللوائح التنفيذية ذات العلاقة.",
       ],
     },
     {
-      heading: "البيانات الشخصية التي نجمعها",
-      body: [
-        "بحسب طريقة تعاملك معنا — بصفتك مالك عقار أو ضيفاً أو زائراً للموقع — قد نجمع الفئات التالية من البيانات الشخصية:",
-      ],
+      heading: "البيانات التي يتم جمعها",
+      body: ["قد نقوم بجمع البيانات التالية:"],
       items: [
-        "بيانات الهوية — الاسم الكامل والجنسية ورقم الهوية الوطنية أو الإقامة وتاريخ الميلاد عند الحاجة إليه للتحقق.",
-        "بيانات التواصل — البريد الإلكتروني ورقم الهاتف والعنوان البريدي أو الوطني.",
-        "بيانات العقار — بالنسبة للمُلّاك: موقع العقار وصك الملكية أو وثائق إثبات الملكية وصور العقار وتفاصيل التجهيزات والمفروشات.",
-        "البيانات المالية — بيانات الحساب البنكي أو الآيبان لأغراض التحويلات، وبيانات التسجيل الضريبي عند الاقتضاء، وسجلات المدفوعات وحصص الإيرادات.",
-        "بيانات الحجز والضيوف — تفاصيل الحجز وتواريخ الإقامة والمراسلات المتعلقة بالحجز.",
-        "البيانات التقنية — عنوان بروتوكول الإنترنت ونوع المتصفح وإصداره ومعلومات الجهاز والبيانات التي تُجمَع عبر ملفات تعريف الارتباط والتقنيات المشابهة عند زيارتك للموقع.",
-        "بيانات المراسلات — مضمون الاستفسارات والرسائل والمراسلات التي تتبادلها معنا.",
+        "الاسم الكامل",
+        "رقم الجوال",
+        "البريد الإلكتروني",
+        "المدينة أو العنوان",
+        "بيانات الهوية عند الحاجة النظامية",
+        "بيانات الحجوزات أو الطلبات",
+        "بيانات الدفع عند الحاجة",
+        "بيانات استخدام الموقع",
+        "عنوان IP ونوع الجهاز والمتصفح",
+        "ملفات تعريف الارتباط (Cookies)",
       ],
     },
     {
-      heading: "كيف نجمع بياناتك",
+      heading: "طرق جمع البيانات",
+      body: ["يتم جمع البيانات الشخصية من خلال:"],
       items: [
-        "مباشرةً منك — عند تعبئة نموذج على موقعنا أو طلب تقدير للإيرادات أو التواصل معنا أو خلال إجراءات تسجيل المالك.",
-        "تلقائياً — عبر ملفات تعريف الارتباط وأدوات التحليل عند تصفّحك للموقع.",
-        "من أطراف ثالثة — من منصات الحجز مثل Airbnb وBooking.com، ومن مزوّدي خدمات الدفع، ومن الجهات الحكومية أو خدمات التحقق عند الحاجة لتقديم خدماتنا بصورة نظامية.",
+        "النماذج الإلكترونية",
+        "إنشاء الحسابات",
+        "التواصل عبر البريد الإلكتروني أو الهاتف أو الواتساب",
+        "استخدام الموقع والخدمات",
+        "ملفات تعريف الارتباط وأدوات التحليل",
       ],
     },
     {
-      heading: "أغراض استخدام بياناتك",
-      body: [
-        "لا نعالج البيانات الشخصية إلا متى وُجِد أساس نظامي لذلك بموجب نظام حماية البيانات الشخصية — بما في ذلك تنفيذ عقد معك، أو الامتثال لالتزام نظامي، أو المصلحة المشروعة، أو موافقتك. ونستخدم البيانات الشخصية للأغراض التالية:",
-      ],
+      heading: "الغرض من استخدام البيانات",
+      body: ["تُستخدم البيانات الشخصية للأغراض التالية:"],
       items: [
-        "تقديم خدمات إدارة العقارات، بما يشمل التأثيث والإدراج والتشغيل.",
-        "إنشاء الإعلانات وإدارتها على منصات الحجز ومعالجة الحجوزات.",
-        "معالجة المدفوعات وحصص الإيرادات والتحويلات، ومسك السجلات المحاسبية والضريبية.",
-        "التحقق من الهوية والملكية وإجراء فحوصات العناية الواجبة ذات الصلة.",
-        "التواصل معك بشأن عقارك وحسابك وحجوزاتك وتحديثات الخدمة.",
-        "الامتثال للالتزامات النظامية والرقابية، بما في ذلك متطلبات الترخيص السياحي والضرائب ومكافحة الجرائم المالية.",
-        "تشغيل موقعنا وخدماتنا وصيانتها وتأمينها وتحسينها.",
-        "إرسال الرسائل التسويقية في حال موافقتك على تلقّيها، ويمكنك سحب هذه الموافقة في أي وقت.",
+        "تقديم الخدمات وتشغيل الموقع",
+        "إدارة الطلبات والحجوزات",
+        "التواصل مع المستخدمين وخدمة العملاء",
+        "تحسين تجربة المستخدم",
+        "إرسال التحديثات والعروض التسويقية بعد الحصول على الموافقة عند الحاجة",
+        "الامتثال للأنظمة واللوائح المعمول بها",
+        "حماية الموقع من الاحتيال أو الاستخدام غير المشروع",
       ],
     },
     {
-      heading: "ملفات تعريف الارتباط وأدوات التحليل",
+      heading: "الأساس النظامي للمعالجة",
       body: [
-        "يستخدم موقعنا ملفات تعريف الارتباط والتقنيات المشابهة للحفاظ على عمل الموقع، وتذكّر تفضيل اللغة لديك، وفهم طريقة استخدام الزوار للموقع بهدف تحسينه. ويمكنك التحكم في ملفات تعريف الارتباط أو تعطيلها من إعدادات متصفحك، علماً بأن تعطيل بعضها قد يؤثر في طريقة عمل الموقع.",
+        "تتم معالجة البيانات الشخصية بناءً على أحد الأسس النظامية التالية:",
+      ],
+      items: [
+        "موافقة صاحب البيانات",
+        "تنفيذ التزام تعاقدي",
+        "الامتثال لالتزام نظامي",
+        "تحقيق مصلحة مشروعة لا تتعارض مع حقوق صاحب البيانات",
       ],
     },
     {
-      heading: "الإفصاح عن بياناتك",
+      heading: "مشاركة البيانات",
       body: [
-        "لا نبيع بياناتك الشخصية. وقد نُفصح عنها فقط بالقدر اللازم وبما يسمح به النظام، إلى الجهات التالية:",
+        "لا يتم بيع أو تأجير البيانات الشخصية لأي طرف ثالث.",
+        "قد تتم مشاركة البيانات مع:",
       ],
       items: [
-        "منصات الحجز — مثل Airbnb وBooking.com — بالقدر اللازم لإدراج العقارات وإدارة الحجوزات.",
-        "مزوّدو خدمات الدفع والبنوك — لمعالجة المدفوعات والتحويلات.",
-        "مزوّدو الخدمات الذين يعملون نيابةً عنا — مثل مزوّدي خدمات التنظيف والصيانة والتصوير والجدولة والاستضافة — وهم ملزمون بحماية البيانات.",
-        "المستشارون المهنيون — مثل المستشارين القانونيين والمحاسبين ومراجعي الحسابات.",
-        "الجهات الحكومية والرقابية والقضائية — بما في ذلك وزارة السياحة وهيئة الزكاة والضريبة والجمارك والهيئة السعودية للبيانات والذكاء الاصطناعي — متى كان الإفصاح مطلوباً نظاماً أو لإثبات حق نظامي أو ممارسته أو الدفاع عنه.",
+        "مزودي الخدمات التقنية والتشغيلية",
+        "مزودي خدمات الدفع",
+        "الجهات الحكومية أو التنظيمية عند الطلب النظامي",
+        "الجهات القضائية أو الأمنية عند الحاجة النظامية",
       ],
     },
     {
       heading: "نقل البيانات خارج المملكة",
       body: [
-        "تُعالَج بياناتك الشخصية وتُخزَّن بصورة أساسية داخل المملكة العربية السعودية. وعند الحاجة إلى أي نقل أو معالجة خارج المملكة — مثلاً عبر منصة حجز دولية — فلن يتم ذلك إلا وفق الشروط والضمانات التي يقتضيها نظام حماية البيانات الشخصية ولائحته التنفيذية.",
+        "في حال نقل البيانات الشخصية أو معالجتها خارج المملكة العربية السعودية، يتم ذلك وفق الضوابط النظامية المعتمدة وبما يضمن مستوىً مناسباً من الحماية.",
+      ],
+    },
+    {
+      heading: "حماية البيانات",
+      body: [
+        "يتم تطبيق تدابير أمنية وتقنية وتنظيمية مناسبة لحماية البيانات الشخصية من الوصول غير المصرح به أو التعديل أو الإفصاح أو الفقد أو التلف.",
       ],
     },
     {
       heading: "مدة الاحتفاظ بالبيانات",
       body: [
-        "نحتفظ بالبيانات الشخصية للمدة اللازمة فقط لتحقيق الأغراض التي جُمِعت من أجلها، بما في ذلك الوفاء بأي متطلبات نظامية أو محاسبية أو ضريبية أو رقابية. ويُحتفظ بالسجلات المالية والضريبية للمدة التي يقتضيها النظام السعودي. وعند انتفاء الحاجة إلى البيانات، يتم إتلافها أو إخفاء هويتها بصورة آمنة.",
+        "يتم الاحتفاظ بالبيانات الشخصية للمدة اللازمة لتحقيق الأغراض الموضحة في هذه السياسة أو وفقاً لما تتطلبه الأنظمة المعمول بها.",
       ],
     },
     {
-      heading: "أمن البيانات",
-      body: [
-        "نطبّق تدابير تقنية وتنظيمية مناسبة لحماية البيانات الشخصية من الفقد أو الوصول أو التعديل أو الإفصاح غير المصرّح به. ويقتصر الوصول إلى البيانات الشخصية على من يحتاجها لأداء مهامه. ومع أنه لا توجد وسيلة نقل أو تخزين آمنة تماماً، فإننا نعمل على حماية بياناتك والمحافظة على الضمانات التي يقتضيها النظام.",
-      ],
-    },
-    {
-      heading: "حقوقك",
-      body: [
-        "بموجب نظام حماية البيانات الشخصية، ومع مراعاة شروطه واستثناءاته، يحق لك ما يلي:",
-      ],
+      heading: "حقوق صاحب البيانات",
+      body: ["يحق لصاحب البيانات الشخصية:"],
       items: [
-        "العلم بالأساس النظامي والغرض من جمع بياناتك الشخصية.",
-        "الوصول إلى بياناتك الشخصية المحفوظة لدينا.",
-        "طلب الحصول على نسخة من بياناتك الشخصية بصيغة مقروءة.",
-        "طلب تصحيح البيانات الشخصية غير الصحيحة أو غير المكتملة أو غير المحدّثة.",
-        "طلب إتلاف بياناتك الشخصية متى انتفت الحاجة إليها.",
-        "سحب موافقتك على معالجة بياناتك الشخصية في أي وقت، متى كانت المعالجة قائمة على الموافقة.",
+        "الوصول إلى بياناته الشخصية",
+        "طلب تصحيح البيانات غير الدقيقة",
+        "طلب إتلاف البيانات عند انتفاء الحاجة النظامية",
+        "سحب الموافقة متى كان الأساس النظامي هو الموافقة",
+        "تقديم شكوى لدى الجهة المختصة",
       ],
     },
     {
-      heading: "كيفية ممارسة حقوقك",
+      heading: "ملفات تعريف الارتباط",
       body: [
-        `لممارسة أي من هذه الحقوق، تواصل معنا عبر البريد الإلكتروني ${COMPANY.email} أو الهاتف ${COMPANY.phone}. وسنردّ على طلبك خلال المدة التي يقتضيها النظام. ولا تُفرض في العادة أي رسوم مقابل ممارسة حقوقك.`,
+        "قد يستخدم الموقع ملفات تعريف الارتباط لتحسين الأداء وتجربة المستخدم وتحليل الاستخدام.",
       ],
     },
     {
-      heading: "خصوصية الأطفال",
+      heading: "التعديلات على السياسة",
       body: [
-        "موقعنا وخدماتنا موجّهة لمُلّاك العقارات والمستخدمين البالغين. ولا نجمع عن قصد بيانات شخصية من القُصّر. وإذا كنت تعتقد أن قاصراً قد زوّدنا ببيانات شخصية، فيُرجى التواصل معنا لاتخاذ الإجراء المناسب.",
+        "تحتفظ RentRoyz بحق تعديل سياسة الخصوصية في أي وقت، ويتم نشر النسخة المحدثة عبر الموقع مع تحديث تاريخ السريان.",
       ],
     },
     {
-      heading: "التعديلات على هذه السياسة",
-      body: [
-        "قد نُحدّث سياسة الخصوصية هذه من حين لآخر لتعكس تغييرات في ممارساتنا أو في الأنظمة. وستظل النسخة الحالية، مع تاريخ «آخر تحديث»، متاحة دائماً على هذه الصفحة. وسيتم الإبلاغ عن التغييرات الجوهرية عند الاقتضاء.",
-      ],
-    },
-    {
-      heading: "التواصل معنا وتقديم الشكاوى",
-      body: [
-        `إذا كان لديك أي سؤال أو طلب أو شكوى بخصوص هذه السياسة أو طريقة تعاملنا مع بياناتك الشخصية، فيُرجى التواصل معنا عبر ${COMPANY.email} أو ${COMPANY.phone}.`,
-        "وإذا لم تكن راضياً عن ردّنا، فيحق لك تقديم شكوى إلى الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا) بصفتها الجهة الرقابية المختصة في المملكة العربية السعودية.",
+      heading: "معلومات التواصل",
+      items: [
+        `اسم الشركة: ${COMPANY.legalName.ar}`,
+        `البريد الإلكتروني: ${COMPANY.email}`,
+        `رقم التواصل: ${COMPANY.phone}`,
+        `العنوان: ${COMPANY.address.ar}`,
       ],
     },
   ],
-  disclaimerLabel: SHARED_DISCLAIMER_LABEL.ar,
-  disclaimer: SHARED_DISCLAIMER.ar,
 };
 
 const termsAr: LegalDoc = {
   title: "الشروط والأحكام",
   tagline: "الشروط التي تحكم استخدامك لموقع رنت رويز وخدماتها.",
   lastUpdatedLabel: "آخر تحديث",
-  lastUpdated: "١٤ مايو ٢٠٢٦",
+  lastUpdated: "14/05/2026",
   intro: [
     "تحكم هذه الشروط والأحكام («الشروط») وصولك إلى الموقع الإلكتروني rentroyz.com واستخدامك له، وخدمات إدارة العقارات التي تقدّمها رنت رويز في المملكة العربية السعودية.",
     "بوصولك إلى الموقع أو استعانتك بخدماتنا، فإنك توافق على الالتزام بهذه الشروط. وإذا كنت لا توافق عليها، فيُرجى عدم استخدام الموقع أو خدماتنا.",
@@ -677,11 +646,10 @@ const termsAr: LegalDoc = {
       heading: "التواصل معنا",
       body: ["إذا كان لديك أي سؤال بخصوص هذه الشروط، فيُرجى التواصل معنا:"],
       items: [
-        `الاسم المسجّل: ${COMPANY.legalName.ar}`,
-        `الاسم التجاري: ${COMPANY.brandName.ar}`,
+        `اسم الشركة: ${COMPANY.legalName.ar}`,
         `رقم السجل التجاري: ${COMPANY.cr}`,
         `الرقم الضريبي (ضريبة القيمة المضافة): ${COMPANY.vat}`,
-        `العنوان المسجّل: ${COMPANY.address.ar}`,
+        `العنوان: ${COMPANY.address.ar}`,
         `البريد الإلكتروني: ${COMPANY.email}`,
         `الهاتف: ${COMPANY.phone}`,
       ],

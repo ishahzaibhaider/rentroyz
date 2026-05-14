@@ -47,24 +47,28 @@ export default function LegalPage({
             </p>
           </header>
 
-          {/* Compliance disclaimer — surfaced at the top of the document, as
-              promised to the client, so a reviewer sees it immediately. */}
-          <aside className="mt-10 rounded-xl border border-ember/40 bg-ember/5 px-5 py-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ember">
-              {doc.disclaimerLabel}
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-sand/70">
-              {doc.disclaimer}
-            </p>
-          </aside>
-
-          <div className="mt-10 space-y-5">
-            {doc.intro.map((para, i) => (
-              <p key={i} className="text-base leading-relaxed text-sand/80">
-                {para}
+          {/* Template disclaimer — only present on the in-house Terms draft.
+              The client-provided Privacy Policy carries no disclaimer. */}
+          {doc.disclaimer && (
+            <aside className="mt-10 rounded-xl border border-ember/40 bg-ember/5 px-5 py-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ember">
+                {doc.disclaimerLabel}
               </p>
-            ))}
-          </div>
+              <p className="mt-2 text-sm leading-relaxed text-sand/70">
+                {doc.disclaimer}
+              </p>
+            </aside>
+          )}
+
+          {doc.intro.length > 0 && (
+            <div className="mt-10 space-y-5">
+              {doc.intro.map((para, i) => (
+                <p key={i} className="text-base leading-relaxed text-sand/80">
+                  {para}
+                </p>
+              ))}
+            </div>
+          )}
 
           <div className="mt-12 space-y-12">
             {doc.sections.map((section, i) => (
