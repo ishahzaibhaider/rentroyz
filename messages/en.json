@@ -194,7 +194,8 @@
     "scheduleBtn": "Schedule Meeting",
     "contactBtn": "Contact Us",
     "email": "info@rentroyz.com",
-    "phone": "+966 55 650 0470"
+    "phone": "+966 55 650 0470",
+    "reachDirectly": "Or reach us directly:"
   },
   "footer": {
     "copyright": "© Rent Royz, All rights reserved.",

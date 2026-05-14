@@ -95,7 +95,7 @@ export default function ContactCta() {
         />
 
         <div className="mt-12 flex flex-col items-center gap-2 text-base text-ink-deep/60 sm:flex-row sm:gap-6">
-          <span className="text-ink-deep/40">Or reach us directly:</span>
+          <span className="text-ink-deep/40">{t("reachDirectly")}</span>
           <a
             href={`mailto:${email}`}
             className="transition-colors hover:text-ink-deep"
