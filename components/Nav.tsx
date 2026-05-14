@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
+import { Link } from "@/lib/i18n/navigation";
 import Wordmark from "./ui/Wordmark";
 import LanguageSwitcher from "./LanguageSwitcher";
 
@@ -54,13 +55,17 @@ export default function Nav() {
             <Wordmark className="h-7 w-auto" />
           </a>
 
-          <nav className="hidden items-center gap-10 text-sm tracking-wide text-sand/80 md:flex">
+          {/* Full nav shows at lg+. With five items it would crowd the bar
+              on tablet widths, so md falls back to the hamburger menu. */}
+          <nav className="hidden items-center gap-8 text-sm tracking-wide text-sand/80 lg:flex">
             <a className="transition hover:text-sand" href="#transformation">{t("services")}</a>
             <a className="transition hover:text-sand" href="#pillars">{t("about")}</a>
             <a className="transition hover:text-sand" href="#contact">{t("contact")}</a>
+            <Link className="transition hover:text-sand" href="/privacy-policy">{t("privacyPolicy")}</Link>
+            <Link className="transition hover:text-sand" href="/terms">{t("terms")}</Link>
           </nav>
 
-          <div className="hidden items-center gap-4 md:flex">
+          <div className="hidden items-center gap-4 lg:flex">
             <LanguageSwitcher />
             <span className="h-4 w-px bg-sand/20" aria-hidden />
             <a
@@ -79,7 +84,7 @@ export default function Nav() {
 
           <button
             aria-label="Open menu"
-            className="md:hidden text-sand"
+            className="lg:hidden text-sand"
             onClick={() => setOpen(true)}
           >
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
@@ -94,7 +99,7 @@ export default function Nav() {
           a containing block for fixed-positioned descendants — which would
           shrink this overlay to the header's height and reveal the page behind. */}
       {open && (
-        <div className="fixed inset-0 z-[60] flex flex-col bg-ink-deep px-6 py-6 md:hidden">
+        <div className="fixed inset-0 z-[60] flex flex-col bg-ink-deep px-6 py-6 lg:hidden">
           <div className="flex items-center justify-between">
             <Wordmark className="h-7 w-auto text-sand" />
             <button
@@ -111,6 +116,10 @@ export default function Nav() {
             <a onClick={() => setOpen(false)} href="#transformation">{t("services")}</a>
             <a onClick={() => setOpen(false)} href="#pillars">{t("about")}</a>
             <a onClick={() => setOpen(false)} href="#contact">{t("contact")}</a>
+          </nav>
+          <nav className="mt-8 flex flex-col gap-4 text-lg text-sand/70">
+            <Link onClick={() => setOpen(false)} href="/privacy-policy">{t("privacyPolicy")}</Link>
+            <Link onClick={() => setOpen(false)} href="/terms">{t("terms")}</Link>
           </nav>
           <div className="mt-auto flex flex-col gap-3">
             <div className="flex justify-center pb-2">
