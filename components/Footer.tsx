@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/lib/i18n/navigation";
 import SocialLinks from "./SocialLinks";
 import PaymentMethods from "./PaymentMethods";
 
@@ -66,6 +67,24 @@ export default async function Footer() {
             </div>
           </div>
         </div>
+
+        <nav className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+          <Link
+            href="/privacy-policy"
+            className="text-sand/60 transition-colors hover:text-sand"
+          >
+            {t("privacyPolicy")}
+          </Link>
+          <span className="text-sand/20" aria-hidden>
+            •
+          </span>
+          <Link
+            href="/terms"
+            className="text-sand/60 transition-colors hover:text-sand"
+          >
+            {t("terms")}
+          </Link>
+        </nav>
 
         <p className="mt-6 text-sm">
           {t("copyright")} {new Date().getFullYear()}
